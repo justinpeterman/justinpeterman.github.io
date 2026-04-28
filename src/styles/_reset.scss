@@ -8,7 +8,6 @@
 
 html {
   background: var(--bg);
-  scroll-behavior: smooth;
 }
 
 body {
@@ -18,6 +17,7 @@ body {
   font-feature-settings: "cv01", "ss03";
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  touch-action: pan-y;
 }
 
 ::selection {

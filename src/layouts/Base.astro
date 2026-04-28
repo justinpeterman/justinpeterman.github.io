@@ -99,6 +99,19 @@ const copyrightYear = `© ${toRoman(new Date().getFullYear())}`;
   } else {
     scrollEls.forEach(el => el.classList.add('scroll-reveal--visible'));
   }
+
+  // Smooth-scroll anchor links without setting scroll-behavior on <html>
+  // (scroll-behavior: smooth on html fights Safari's address-bar hide/show)
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const id = (anchor as HTMLAnchorElement).getAttribute('href')!.slice(1);
+      const target = document.getElementById(id);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
 </script>
 
 </body>

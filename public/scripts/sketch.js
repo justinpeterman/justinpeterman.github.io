@@ -58,7 +58,14 @@
         t += 0.004;
     };
 
+    let _lastW = 0;
+    // On touch devices, Safari fires resize on every address-bar show/hide (height
+    // only). resizeCanvas mid-scroll is expensive, so we skip height-only changes
+    // there. On desktop, all resize events go through so vertical drags work fine.
+    const _isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     window.windowResized = function () {
+        if (_isTouch && windowWidth === _lastW) return;
+        _lastW = windowWidth;
         resizeCanvas(windowWidth, windowHeight);
         const cfg = window.JP_CONFIG;
         blobState = cfg.blobs.map((b,i) => blobState[i] ?? { x: b.bx * width, y: b.by * height });
