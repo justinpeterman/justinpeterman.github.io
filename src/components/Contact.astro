@@ -1,9 +1,9 @@
 ---
 ---
-<section id="contact">
+<section id="contact" aria-labelledby="contact-label">
   <div class="contact__inner">
     <div class="contact__label scroll-reveal">
-      <span class="contact__label-text">Contact</span>
+      <h2 id="contact-label" class="contact__label-text">Contact</h2>
       <span class="contact__rule" aria-hidden="true"></span>
     </div>
     <div class="contact__body">
@@ -12,11 +12,11 @@
       <form class="contact__form scroll-reveal scroll-reveal--delay-2" id="contact-form">
         <div class="form__row">
           <div class="form__group">
-            <label class="form__label" for="cf-name">Name</label>
+            <label class="form__label" for="cf-name">Name<span class="form__required-mark" aria-hidden="true"> *</span></label>
             <input class="form__input" type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name" required>
           </div>
           <div class="form__group">
-            <label class="form__label" for="cf-email">Email</label>
+            <label class="form__label" for="cf-email">Email<span class="form__required-mark" aria-hidden="true"> *</span></label>
             <input class="form__input" type="email" id="cf-email" name="email" placeholder="your@email.com" autocomplete="email" required>
           </div>
         </div>
@@ -25,12 +25,12 @@
           <input class="form__input" type="text" id="cf-subject" name="subject" placeholder="What's on your mind?">
         </div>
         <div class="form__group">
-          <label class="form__label" for="cf-message">Message</label>
+          <label class="form__label" for="cf-message">Message<span class="form__required-mark" aria-hidden="true"> *</span></label>
           <textarea class="form__textarea" id="cf-message" name="message" placeholder="Tell me more…" required></textarea>
         </div>
         <div class="form__footer">
           <button type="submit" class="form__submit" id="cf-submit">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             Send message
           </button>
           <p class="form__error" id="cf-error" aria-live="polite"></p>
@@ -55,7 +55,7 @@
   const btn     = document.getElementById('cf-submit') as HTMLButtonElement;
   const error   = document.getElementById('cf-error') as HTMLParagraphElement;
 
-  const SEND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+  const SEND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
 
   form.addEventListener('submit', async (e: Event) => {
     e.preventDefault();
@@ -75,6 +75,11 @@
         form.reset();
         form.style.display = 'none';
         success.classList.add('contact__success--visible');
+        const heading = success.querySelector<HTMLElement>('.contact__success-heading');
+        if (heading) {
+          heading.setAttribute('tabindex', '-1');
+          heading.focus();
+        }
       } else {
         const data = await res.json().catch(() => ({}));
         const msg = (data as any)?.errors?.[0]?.message ?? 'Something went wrong — please try again.';

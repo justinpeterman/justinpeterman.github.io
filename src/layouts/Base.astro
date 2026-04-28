@@ -4,7 +4,8 @@ import { site } from '../data/site';
 import { JP_CONFIG } from '../data/blobs';
 import { toRoman } from '../utils/roman';
 const blobConfig = JP_CONFIG;
-const copyrightYear = `© ${toRoman(new Date().getFullYear())}`;
+const currentYear = new Date().getFullYear();
+const copyrightYear = `© ${toRoman(currentYear)}`;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -64,7 +65,9 @@ const copyrightYear = `© ${toRoman(new Date().getFullYear())}`;
   </nav>
 </header>
 
-<slot />
+<main>
+  <slot />
+</main>
 
 <!-- Status bar -->
 <footer class="status">
@@ -72,7 +75,7 @@ const copyrightYear = `© ${toRoman(new Date().getFullYear())}`;
     <svg class="status__pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 13-8 13S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
     {site.footer.location}
   </span>
-  <span class="status__coords">{copyrightYear}</span>
+  <span class="status__coords" aria-label={`© ${currentYear}`}>{copyrightYear}</span>
 </footer>
 
 <!-- JP_CONFIG injected from blobs.ts -->

@@ -123,6 +123,13 @@
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--text-subtle);
+    display: flex;
+    gap: 3px;
+  }
+
+  &__required-mark {
+    color: var(--accent);
+    font-style: normal;
   }
 
   &__input,
