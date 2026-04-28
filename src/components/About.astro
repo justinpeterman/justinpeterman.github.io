@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import { bio, facts, socials } from '../data/about';
+---
+<section id="about">
+  <div class="about__inner">
+    <div class="about__label scroll-reveal">
+      <span class="about__label-text">About</span>
+      <span class="about__rule" aria-hidden="true"></span>
+    </div>
+    <div class="about__body">
+      <div class="about__intro-grid scroll-reveal scroll-reveal--delay-1">
+        <!-- Portrait photo -->
+        <div class="about__photo-wrap">
+          <Image
+            src="/photo.jpg"
+            alt="Justin Peterman"
+            width={440}
+            height={440}
+            class="about__photo"
+          />
+        </div>
+        <!-- Headline + bio -->
+        <div>
+          <h2 class="about__headline">Building the tools<br>that help people write.</h2>
+          <div class="about__bio">
+            {bio.map(para => <p set:html={para}></p>)}
+          </div>
+        </div>
+      </div>
+
+      <div class="about__facts scroll-reveal scroll-reveal--delay-2">
+        {facts.map(f => (
+          <div class="fact">
+            <span class="fact__num">{f.num}</span>
+            <span class="fact__label" set:html={f.label.replace('\n', '<br>')}></span>
+          </div>
+        ))}
+      </div>
+
+      <div class="about__links scroll-reveal scroll-reveal--delay-4">
+        {socials.map(s => (
+          <a
+            href={s.href}
+            class="social-icon"
+            aria-label={s.label}
+            title={s.title}
+            target={s.external ? '_blank' : undefined}
+            rel={s.external ? 'noopener' : undefined}
+            set:html={s.icon}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

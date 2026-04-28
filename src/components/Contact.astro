@@ -1,0 +1,89 @@
+---
+---
+<section id="contact">
+  <div class="contact__inner">
+    <div class="contact__label scroll-reveal">
+      <span class="contact__label-text">Contact</span>
+      <span class="contact__rule" aria-hidden="true"></span>
+    </div>
+    <div class="contact__body">
+      <h2 class="contact__headline scroll-reveal scroll-reveal--delay-1">Let's build something<br>together.</h2>
+      <p class="contact__sub scroll-reveal scroll-reveal--delay-1">Whether it's a new project, a collaboration, or just a conversation about the web — I'd love to hear from you.</p>
+      <form class="contact__form scroll-reveal scroll-reveal--delay-2" id="contact-form">
+        <div class="form__row">
+          <div class="form__group">
+            <label class="form__label" for="cf-name">Name</label>
+            <input class="form__input" type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name" required>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="cf-email">Email</label>
+            <input class="form__input" type="email" id="cf-email" name="email" placeholder="your@email.com" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="form__group">
+          <label class="form__label" for="cf-subject">Subject</label>
+          <input class="form__input" type="text" id="cf-subject" name="subject" placeholder="What's on your mind?">
+        </div>
+        <div class="form__group">
+          <label class="form__label" for="cf-message">Message</label>
+          <textarea class="form__textarea" id="cf-message" name="message" placeholder="Tell me more…" required></textarea>
+        </div>
+        <div class="form__footer">
+          <button type="submit" class="form__submit" id="cf-submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Send message
+          </button>
+          <p class="form__error" id="cf-error" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div class="contact__success" id="contact-success" aria-live="polite">
+        <svg class="contact__success-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="9 12 11 14 15 10"/>
+        </svg>
+        <p class="contact__success-heading">Message sent.</p>
+        <p class="contact__success-sub">Thanks — I'll be in touch soon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form    = document.getElementById('contact-form') as HTMLFormElement;
+  const success = document.getElementById('contact-success') as HTMLDivElement;
+  const btn     = document.getElementById('cf-submit') as HTMLButtonElement;
+  const error   = document.getElementById('cf-error') as HTMLParagraphElement;
+
+  const SEND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+
+  form.addEventListener('submit', async (e: Event) => {
+    e.preventDefault();
+
+    btn.disabled = true;
+    btn.innerHTML = `${SEND_ICON} Sending…`;
+    error.textContent = '';
+
+    try {
+      const res = await fetch('https://formspree.io/f/xqewvpqp', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form),
+      });
+
+      if (res.ok) {
+        form.reset();
+        form.style.display = 'none';
+        success.classList.add('contact__success--visible');
+      } else {
+        const data = await res.json().catch(() => ({}));
+        const msg = (data as any)?.errors?.[0]?.message ?? 'Something went wrong — please try again.';
+        throw new Error(msg);
+      }
+    } catch (err: unknown) {
+      btn.innerHTML = `${SEND_ICON} Send message`;
+      btn.disabled = false;
+      error.textContent = err instanceof Error ? err.message : 'Something went wrong — please try again.';
+    }
+  });
+</script>

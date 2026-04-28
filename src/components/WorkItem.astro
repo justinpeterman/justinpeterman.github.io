@@ -1,0 +1,22 @@
+---
+interface Props {
+  title: string;
+  company: string;
+  years: string;
+  tags: string[];
+  body: string;
+  delay?: string;
+}
+const { title, company, years, tags, body, delay = '' } = Astro.props;
+---
+<div class={`work-item scroll-reveal${delay ? ` ${delay}` : ''}`}>
+  <div class="work-item__main">
+    <h3 class="work-item__title">{title}</h3>
+    <span class="work-item__company">{company}</span>
+    <p class="work-item__desc" set:html={body}></p>
+    <div class="work-item__tags">
+      {tags.map(tag => <span class="work-item__tag">{tag}</span>)}
+    </div>
+  </div>
+  <div class="work-item__meta"><span class="work-item__years">{years}</span></div>
+</div>

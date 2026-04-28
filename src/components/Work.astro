@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import WorkItem from './WorkItem.astro';
+
+const workEntries = await getCollection('work');
+const sorted = workEntries.sort((a, b) => a.data.order - b.data.order);
+
+const delays = ['', 'scroll-reveal--delay-1', 'scroll-reveal--delay-2', 'scroll-reveal--delay-3', 'scroll-reveal--delay-4'];
+---
+<section id="work">
+  <div class="work__inner">
+    <div class="work__label scroll-reveal">
+      <span class="work__label-text">Work</span>
+      <span class="work__rule" aria-hidden="true"></span>
+    </div>
+    <div class="work__list">
+      {sorted.map((entry, i) => (
+        <WorkItem
+          title={entry.data.title}
+          company={entry.data.company}
+          years={entry.data.years}
+          tags={entry.data.tags}
+          body={entry.data.body}
+          delay={delays[i] ?? ''}
+        />
+      ))}
+    </div>
+  </div>
+</section>

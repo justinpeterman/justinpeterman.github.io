@@ -1,0 +1,269 @@
+.control-panel-wrap { }
+
+.control-panel {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  bottom: 44px;
+  width: 296px;
+  z-index: 199;
+  background: rgba(6, 9, 18, 0.86);
+  backdrop-filter: blur(36px) saturate(150%);
+  -webkit-backdrop-filter: blur(36px) saturate(150%);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  transform: translateX(100%);
+  transition: transform 0.38s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+
+  &::-webkit-scrollbar { width: 3px; }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
+  }
+
+  &--open { transform: translateX(0); }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: rgba(6, 9, 18, 0.92);
+    backdrop-filter: blur(12px);
+  }
+
+  &__title {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.20em;
+    text-transform: uppercase;
+    color: rgba(237, 232, 245, 0.40);
+  }
+
+  &__close {
+    background: none;
+    border: none;
+    color: rgba(237, 232, 245, 0.35);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0;
+    transition: color 0.2s;
+
+    &:hover { color: rgba(237, 232, 245, 0.85); }
+  }
+
+  &__body { padding: 16px 20px 24px; }
+
+  &__section {
+    margin-bottom: 6px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 18px;
+
+    &:last-child { border-bottom: none; }
+  }
+
+  &__section-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(237, 232, 245, 0.30);
+    margin-bottom: 14px;
+    margin-top: 14px;
+  }
+
+  &__swatch {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 0 6px currentColor;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+
+    &:last-child { margin-bottom: 0; }
+  }
+
+  &__label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(237, 232, 245, 0.38);
+    width: 48px;
+    flex-shrink: 0;
+  }
+
+  &__slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.10);
+    border-radius: 1px;
+    outline: none;
+    cursor: pointer;
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(237, 232, 245, 0.88);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(237, 232, 245, 0.25);
+      transition: box-shadow 0.15s;
+
+      &:hover { box-shadow: 0 0 14px rgba(237, 232, 245, 0.45); }
+    }
+
+    &::-moz-range-thumb {
+      width: 11px;
+      height: 11px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(237, 232, 245, 0.88);
+      cursor: pointer;
+    }
+  }
+
+  &__val {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    color: rgba(237, 232, 245, 0.30);
+    width: 30px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  &__color {
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    padding: 2px;
+    background: none;
+    flex-shrink: 0;
+  }
+
+  &__actions {
+    padding: 16px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  &__btn {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(237, 232, 245, 0.6);
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    svg {
+      width: 11px;
+      height: 11px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.09);
+      color: rgba(237, 232, 245, 0.92);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    &--accent {
+      background: rgba(224, 120, 64, 0.12);
+      border-color: rgba(224, 120, 64, 0.32);
+      color: rgba(224, 120, 64, 0.85);
+
+      &:hover {
+        background: rgba(224, 120, 64, 0.22);
+        border-color: rgba(224, 120, 64, 0.55);
+        color: rgba(224, 120, 64, 1);
+      }
+    }
+  }
+
+  &__feedback {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(94, 199, 160, 0.7);
+    text-align: center;
+    height: 14px;
+    transition: opacity 0.3s;
+    opacity: 0;
+
+    &--visible { opacity: 1; }
+  }
+
+  &__toggle {
+    position: fixed;
+    right: 20px;
+    bottom: 56px;
+    z-index: 200;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(237, 232, 245, 0.65);
+    background: rgba(7, 10, 20, 0.60);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 999px;
+    padding: 9px 18px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+
+    svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      color: rgba(237, 232, 245, 0.95);
+      border-color: rgba(255, 255, 255, 0.20);
+      background: rgba(7, 10, 20, 0.82);
+    }
+  }
+}

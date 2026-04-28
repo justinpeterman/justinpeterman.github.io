@@ -1,0 +1,221 @@
+---
+// data-no-export — excluded from downloaded HTML in the original site
+// In Astro this panel is simply rendered into the page; download button still works
+---
+<div id="ctrl-wrap" class="control-panel-wrap">
+
+  <!-- Slide-in panel -->
+  <div id="ctrl-panel" class="control-panel" role="complementary" aria-label="Visual controls">
+    <div class="control-panel__header">
+      <span class="control-panel__title">Tune Background</span>
+      <button class="control-panel__close" id="cp-close-btn" aria-label="Close controls">&#x2715;</button>
+    </div>
+    <div class="control-panel__body" id="cp-body">
+      <!-- Sections injected by JS -->
+    </div>
+    <div class="control-panel__actions">
+      <div class="control-panel__feedback" id="cp-feedback"></div>
+      <button class="control-panel__btn" id="btn-copy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy config JSON
+      </button>
+      <button class="control-panel__btn control-panel__btn--accent" id="btn-download">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download HTML
+      </button>
+    </div>
+  </div>
+
+  <!-- Toggle pill -->
+  <button id="ctrl-toggle-btn" class="control-panel__toggle" aria-label="Toggle visual controls" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+    </svg>
+    Controls
+  </button>
+
+</div>
+
+<script>
+  (function () {
+    const $ = (id: string) => document.getElementById(id)!;
+    const rgbToHex = ([r,g,b]: number[]) => '#' + [r,g,b].map(v => Math.round(v).toString(16).padStart(2,'0')).join('');
+    const hexToRgb = (h: string) => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
+    const fmt = (v: number, d = 2) => typeof v === 'number' ? v.toFixed(d) : v;
+
+    function showFeedback(msg: string) {
+      const el = $('cp-feedback');
+      el.textContent = msg;
+      el.classList.add('control-panel__feedback--visible');
+      setTimeout(() => el.classList.remove('control-panel__feedback--visible'), 2200);
+    }
+
+    function buildPanel() {
+      const cfg = (window as any).JP_CONFIG;
+      const body = $('cp-body');
+      body.innerHTML = '';
+
+      body.insertAdjacentHTML('beforeend', `
+        <div class="control-panel__section">
+          <div class="control-panel__section-head">Global</div>
+          <div class="control-panel__row">
+            <span class="control-panel__label">Grain</span>
+            <input type="range" class="control-panel__slider" id="g-grain" min="0" max="1.5" step="0.01" value="${cfg.grain}">
+            <span class="control-panel__val" id="g-grain-v">${fmt(cfg.grain)}</span>
+          </div>
+        </div>
+      `);
+
+      cfg.blobs.forEach((blob: any, i: number) => {
+        const hex = rgbToHex(blob.c);
+        body.insertAdjacentHTML('beforeend', `
+          <div class="control-panel__section" data-blob="${i}">
+            <div class="control-panel__section-head">
+              <span class="control-panel__swatch" style="background:rgb(${blob.c.join(',')});color:rgb(${blob.c.join(',')})"></span>
+              Blob ${i+1} — ${blob.name}
+            </div>
+            <div class="control-panel__row">
+              <span class="control-panel__label">Color</span>
+              <input type="color" class="control-panel__color" data-blob="${i}" data-prop="c" value="${hex}">
+              <span class="control-panel__val" id="b${i}-c-v" style="font-size:8px">${hex}</span>
+            </div>
+            <div class="control-panel__row">
+              <span class="control-panel__label">Radius</span>
+              <input type="range" class="control-panel__slider" data-blob="${i}" data-prop="r" min="80" max="1600" step="10" value="${blob.r}">
+              <span class="control-panel__val" id="b${i}-r-v">${blob.r}</span>
+            </div>
+            <div class="control-panel__row">
+              <span class="control-panel__label">Alpha</span>
+              <input type="range" class="control-panel__slider" data-blob="${i}" data-prop="alpha" min="0.02" max="1.00" step="0.01" value="${blob.alpha}">
+              <span class="control-panel__val" id="b${i}-alpha-v">${fmt(blob.alpha)}</span>
+            </div>
+            <div class="control-panel__row">
+              <span class="control-panel__label">Speed</span>
+              <input type="range" class="control-panel__slider" data-blob="${i}" data-prop="sp" min="0.02" max="4.00" step="0.02" value="${blob.sp}">
+              <span class="control-panel__val" id="b${i}-sp-v">${fmt(blob.sp)}</span>
+            </div>
+          </div>
+        `);
+      });
+
+      const cur = cfg.cursor;
+      body.insertAdjacentHTML('beforeend', `
+        <div class="control-panel__section">
+          <div class="control-panel__section-head">
+            <span class="control-panel__swatch" style="background:rgb(${cur.c.join(',')});color:rgb(${cur.c.join(',')})"></span>
+            Cursor Orb
+          </div>
+          <div class="control-panel__row">
+            <span class="control-panel__label">Color</span>
+            <input type="color" class="control-panel__color" id="cur-c" value="${rgbToHex(cur.c)}">
+            <span class="control-panel__val" id="cur-c-v" style="font-size:8px">${rgbToHex(cur.c)}</span>
+          </div>
+          <div class="control-panel__row">
+            <span class="control-panel__label">Radius</span>
+            <input type="range" class="control-panel__slider" id="cur-r" min="50" max="1400" step="10" value="${cur.r}">
+            <span class="control-panel__val" id="cur-r-v">${cur.r}</span>
+          </div>
+          <div class="control-panel__row">
+            <span class="control-panel__label">Alpha</span>
+            <input type="range" class="control-panel__slider" id="cur-alpha" min="0.02" max="1.00" step="0.01" value="${cur.alpha}">
+            <span class="control-panel__val" id="cur-alpha-v">${fmt(cur.alpha)}</span>
+          </div>
+        </div>
+      `);
+
+      wireAll();
+    }
+
+    function wireAll() {
+      const cfg = (window as any).JP_CONFIG;
+
+      $('g-grain').addEventListener('input', function(this: HTMLInputElement) {
+        const v = parseFloat(this.value);
+        cfg.grain = v;
+        const grain = document.getElementById('grain-el');
+        if (grain) grain.style.opacity = String(v);
+        $('g-grain-v').textContent = fmt(v);
+      });
+
+      document.querySelectorAll<HTMLInputElement>('[data-blob][data-prop]').forEach(el => {
+        el.addEventListener('input', function(this: HTMLInputElement) {
+          const i = parseInt(this.dataset.blob!);
+          const prop = this.dataset.prop!;
+          const blob = cfg.blobs[i];
+          if (prop === 'c') {
+            blob.c = hexToRgb(this.value);
+            (document.getElementById(`b${i}-c-v`) as HTMLElement).textContent = this.value;
+            const swatch = document.querySelector<HTMLElement>(`[data-blob="${i}"] .control-panel__swatch`);
+            if (swatch) swatch.style.cssText = `background:rgb(${blob.c.join(',')});color:rgb(${blob.c.join(',')})`;
+          } else if (prop === 'r') {
+            blob.r = parseInt(this.value);
+            (document.getElementById(`b${i}-r-v`) as HTMLElement).textContent = this.value;
+          } else if (prop === 'alpha') {
+            blob.alpha = parseFloat(this.value);
+            (document.getElementById(`b${i}-alpha-v`) as HTMLElement).textContent = fmt(blob.alpha);
+          } else if (prop === 'sp') {
+            blob.sp = parseFloat(this.value);
+            (document.getElementById(`b${i}-sp-v`) as HTMLElement).textContent = fmt(blob.sp);
+          }
+        });
+      });
+
+      ($('cur-c') as HTMLInputElement).addEventListener('input', function(this: HTMLInputElement) {
+        cfg.cursor.c = hexToRgb(this.value);
+        $('cur-c-v').textContent = this.value;
+        const swatch = document.querySelector<HTMLElement>('#cp-body .control-panel__section:last-child .control-panel__swatch');
+        if (swatch) swatch.style.cssText = `background:${this.value};color:${this.value}`;
+      });
+      ($('cur-r') as HTMLInputElement).addEventListener('input', function(this: HTMLInputElement) {
+        cfg.cursor.r = parseInt(this.value);
+        $('cur-r-v').textContent = this.value;
+      });
+      ($('cur-alpha') as HTMLInputElement).addEventListener('input', function(this: HTMLInputElement) {
+        cfg.cursor.alpha = parseFloat(this.value);
+        $('cur-alpha-v').textContent = fmt(cfg.cursor.alpha);
+      });
+    }
+
+    function togglePanel(open?: boolean) {
+      const panel  = $('ctrl-panel');
+      const btn    = $('ctrl-toggle-btn');
+      const isOpen = panel.classList.contains('control-panel--open');
+      const target = open !== undefined ? open : !isOpen;
+      panel.classList.toggle('control-panel--open', target);
+      btn.setAttribute('aria-expanded', String(target));
+      (btn as HTMLElement).style.right = target ? '316px' : '20px';
+    }
+
+    $('ctrl-toggle-btn').addEventListener('click', () => togglePanel());
+    $('cp-close-btn').addEventListener('click', () => togglePanel(false));
+
+    $('btn-copy').addEventListener('click', () => {
+      const json = JSON.stringify((window as any).JP_CONFIG, null, 2);
+      navigator.clipboard.writeText(json).then(() => showFeedback('✓ Copied to clipboard'));
+    });
+
+    $('btn-download').addEventListener('click', () => {
+      const configJSON = JSON.stringify((window as any).JP_CONFIG, null, 2).replace(/\n/g, '\n    ');
+      const clone = document.documentElement.cloneNode(true) as HTMLElement;
+      clone.querySelectorAll('[data-no-export]').forEach(el => el.remove());
+      let html = '<!DOCTYPE html>\n' + clone.outerHTML;
+      html = html.replace(
+        /\/\* @@CONFIG_BLOCK_START \*\/([\s\S]*?)\/\* @@CONFIG_BLOCK_END \*\//,
+        `/* @@CONFIG_BLOCK_START */\nwindow.JP_CONFIG = ${configJSON};\n    /* @@CONFIG_BLOCK_END */`
+      );
+      const blob = new Blob([html], { type: 'text/html' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url; a.download = 'justin-peterman.html'; a.click();
+      URL.revokeObjectURL(url);
+      showFeedback('✓ Downloaded');
+    });
+
+    // Build panel — wait for JP_CONFIG to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', buildPanel);
+    } else {
+      buildPanel();
+    }
+  })();
+</script>

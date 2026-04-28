@@ -1,0 +1,200 @@
+#about {
+  position: relative;
+  z-index: 3;
+  background: var(--about-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 120px 60px 140px;
+}
+
+.about {
+  &__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 0 80px;
+    align-items: start;
+  }
+
+  &__label {
+    padding-top: 10px;
+    position: sticky;
+    top: 80px;
+  }
+
+  &__label-text {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  &__rule {
+    width: 1px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.12);
+    display: block;
+    margin-left: 1px;
+  }
+
+  &__body { }
+
+  &__headline {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(30px, 3.6vw, 46px);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 44px;
+  }
+
+  &__intro-grid {
+    display: flex;
+    gap: 52px;
+    align-items: flex-start;
+    margin-bottom: 52px;
+  }
+
+  &__photo-wrap {
+    flex-shrink: 0;
+    width: 192px;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.14;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+      background-size: 160px 160px;
+    }
+  }
+
+  &__photo {
+    width: 192px;
+    height: 192px;
+    object-fit: cover;
+    object-position: center 12%;
+    border-radius: 50%;
+    display: block;
+    filter: grayscale(1) sepia(1) hue-rotate(220deg) saturate(0.55) brightness(0.75);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    box-shadow:
+      0 0 0 4px rgba(255, 255, 255, 0.05),
+      0 8px 40px rgba(0, 0, 0, 0.55);
+  }
+
+  &__bio {
+    p {
+      font-family: 'Inter', sans-serif;
+      font-feature-settings: "cv01", "ss03";
+      font-weight: 300;
+      font-size: 17px;
+      line-height: 1.78;
+      letter-spacing: -0.01em;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+
+      &:last-child { margin-bottom: 0; }
+    }
+
+    strong {
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 19px;
+      color: var(--text);
+    }
+  }
+
+  &__facts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  &__links {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}
+
+.fact {
+  padding: 22px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: background 0.3s;
+
+  &:hover { background: rgba(255, 255, 255, 0.055); }
+
+  &__num {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    font-size: 36px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  &__label {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-subtle);
+    display: block;
+    line-height: 1.5;
+  }
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-subtle);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.025);
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+  text-decoration: none;
+
+  svg {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    color: var(--text);
+    border-color: rgba(224, 120, 64, 0.40);
+    background: rgba(224, 120, 64, 0.08);
+    transform: translateY(-2px);
+  }
+}

@@ -1,0 +1,17 @@
+---
+import { site } from '../data/site';
+---
+<section id="hero">
+  <div class="hero__inner">
+  <div class="hero__glass reveal d1">
+    <div class="hero__overline">Welcome</div>
+    <h1 class="hero__title">Justin<span class="hero__title-last">Peterman</span></h1>
+    <p class="hero__role">{site.role}<span class="hero__role-sep">&mdash;</span>{site.roleRight}</p>
+    <p class="hero__intro" set:html={site.tagline}></p>
+    <div class="hero__cta-row">
+      <a href="#about" class="cta cta--primary">About me <span class="cta__arrow">&darr;</span></a>
+      <a href="#contact" class="cta">Get in touch</a>
+    </div>
+  </div>
+  </div>
+</section>
