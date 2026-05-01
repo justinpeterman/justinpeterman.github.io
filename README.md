@@ -45,10 +45,10 @@ The hidden control panel (toggled with the `~` key) lets you tweak all parameter
 
 | Command           | Action                                      |
 | :---------------- | :------------------------------------------ |
-| `npm install`     | Install dependencies                        |
-| `npm run dev`     | Start dev server at `localhost:4321`        |
-| `npm run build`   | Build to `./dist/`                          |
-| `npm run preview` | Preview the production build locally        |
+| `pnpm install`     | Install dependencies                        |
+| `pnpm run dev`     | Start dev server at `localhost:4321`        |
+| `pnpm run build`   | Build to `./dist/`                          |
+| `pnpm run preview` | Preview the production build locally        |
 
 ## Deployment
 
