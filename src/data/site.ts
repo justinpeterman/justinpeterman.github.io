@@ -4,7 +4,6 @@ export const site = {
   title: 'Justin Peterman',
   description: 'Product engineer and creative technologist with deep roots in the browser. I specialize in rich text editors, the open web, and building tools that feel delightful to use.',
   role: 'Product engineer',
-  roleRight: 'creative technologist.',
   tagline: 'Fifteen years of frontend at scale, driven by user experience and an unreasonable commitment to craft.',
   nav: [
     { label: 'Work', href: '#work' },
