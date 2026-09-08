@@ -1,0 +1,71 @@
+---
+---
+<section id="contact" class="contact">
+  <div class="rule-frame">
+    <div class="section-head">
+      <h2>Contact</h2>
+    </div>
+    <div class="contact__grid">
+      <div class="contact__intro">
+        <h3>Let's build something together.</h3>
+        <p>Whether it's a new project, a collaboration, or just a conversation about the web — I'd love to hear from you.</p>
+      </div>
+      <div class="contact__form-wrap">
+        <form class="form" id="contact-form">
+          <div class="form__row">
+            <div class="form__group">
+              <label class="form__label" for="cf-name">Name *</label>
+              <input class="form__input" id="cf-name" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+            </div>
+            <div class="form__group">
+              <label class="form__label" for="cf-email">Email *</label>
+              <input class="form__input" id="cf-email" name="email" type="email" placeholder="your@email.com" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="cf-subject">Subject</label>
+            <input class="form__input" id="cf-subject" name="subject" type="text" placeholder="What's on your mind?">
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="cf-message">Message *</label>
+            <textarea class="form__textarea" id="cf-message" name="message" placeholder="Tell me more…" required></textarea>
+          </div>
+          <button class="btn btn--send" type="submit" id="cf-submit">Send message →</button>
+          <p class="form__error" id="cf-error" aria-live="polite"></p>
+        </form>
+        <div class="contact__success" id="contact-success" aria-live="polite">
+          <p class="contact__success-heading">Message sent.</p>
+          <p class="contact__success-sub">Thanks — I'll be in touch soon.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form    = document.getElementById('contact-form') as HTMLFormElement;
+  const success = document.getElementById('contact-success') as HTMLDivElement;
+  const btn     = document.getElementById('cf-submit') as HTMLButtonElement;
+  const error   = document.getElementById('cf-error') as HTMLParagraphElement;
+
+  form.addEventListener('submit', async (e: Event) => {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    error.textContent = '';
+    try {
+      const res = await fetch('https://formspree.io/f/xqewvpqp', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      if (!res.ok) throw new Error('Something went wrong — please try again.');
+      form.style.display = 'none';
+      success.classList.add('contact__success--visible');
+    } catch (err: unknown) {
+      btn.textContent = 'Send message →';
+      btn.disabled = false;
+      error.textContent = err instanceof Error ? err.message : 'Something went wrong — please try again.';
+    }
+  });
+</script>

@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+const sorted = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<section id="work" class="work">
+  <div class="rule-frame rule-frame--dark">
+    <div class="section-head">
+      <h2>Work</h2>
+      <span class="section-span">2011 — 2026</span>
+    </div>
+    {sorted.map(entry => (
+      <article class="work-item">
+        <div class="work-item__main">
+          <div class="work-item__years">{entry.data.years}</div>
+          <h3>{entry.data.title}</h3>
+          <div class="work-item__company">{entry.data.company}</div>
+        </div>
+        <div class="work-item__body">
+          <p set:html={entry.data.body}></p>
+          <div class="tags">
+            {entry.data.tags.map(tag => <span class="tag">{tag}</span>)}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

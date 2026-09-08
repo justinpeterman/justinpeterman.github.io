@@ -1,0 +1,38 @@
+---
+import { bio, facts, socials } from '../../data/about';
+---
+<section id="about" class="about">
+  <div class="rule-frame">
+    <div class="section-head">
+      <h2>About</h2>
+    </div>
+
+    <div class="about__grid">
+      <div class="about__left">
+        <img src="/photo-dither.png" alt="Justin Peterman" width="340" height="340" class="about__photo">
+        <h3>Building the tools that help people write.</h3>
+      </div>
+      <div class="about__bio">
+        {bio.map(p => <p set:html={p}></p>)}
+      </div>
+    </div>
+
+    <div class="facts">
+      {facts.map(f => (
+        <div class="fact">
+          <div class="fact__num">{f.num}</div>
+          <div class="fact__label" set:html={f.label.replace('\n', '<br>')}></div>
+        </div>
+      ))}
+    </div>
+
+    <div class="socials">
+      {socials.map(s => (
+        <a class="social" href={s.href} title={s.title} aria-label={s.label}
+           target={s.external ? '_blank' : undefined} rel={s.external ? 'noopener' : undefined}>
+          <span class="social__dot"></span>{s.label.replace(' (opens in new tab)', '')}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
