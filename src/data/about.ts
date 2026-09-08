@@ -7,7 +7,7 @@ export const bio: string[] = [
 export const facts = [
   { num: '15+', label: 'Years on the\nopen web' },
   { num: '1B+', label: 'Members\nreached' },
-  { num: 'NYC', label: 'Based in New\nYork City' },
+  { num: 'NYC', label: 'Based in Brooklyn, NY' },
 ];
 
 export const socials = [

@@ -6,7 +6,6 @@ html { background: var(--teal); }
 
 body {
   margin: 0;
-  overflow-x: hidden;
   background: var(--teal);
   color: var(--ink);
   font-family: var(--font-sans);
@@ -416,6 +415,135 @@ a { color: var(--ink); &:hover { color: #0B3A33; } }
     font-size: 11px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
+  }
+}
+
+/* Readability and interaction refinements */
+html {
+  scroll-padding-top: 55px;
+}
+
+.about img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.eyebrow,
+.hero__meta-label,
+.work-item__years,
+.tag,
+.social-link,
+.contact-form label,
+.contact__form label {
+  font-size: max(12px, 0.75rem);
+  letter-spacing: 0.06em;
+}
+
+.contact-form label,
+.contact__form label {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 3px solid var(--cream);
+  outline-offset: 4px;
+}
+
+.contact :where(input, textarea, select) {
+  min-height: 48px;
+  font-size: 16px;
+}
+
+.contact textarea {
+  min-height: 144px;
+  resize: vertical;
+}
+
+.contact :where(button, [type='submit']) {
+  min-height: 48px;
+  padding-inline: 24px;
+}
+
+.about__copy p,
+.about__body p {
+  line-height: 1.75;
+}
+
+.about__copy p + p,
+.about__body p + p {
+  margin-top: 1.25em;
+}
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 55px;
+  }
+
+  .rule-frame,
+  .topbar,
+  .hero,
+  .hero__body,
+  .hero__meta,
+  .hero__meta-cell,
+  .card {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .topbar {
+    gap: 12px;
+    padding-inline: 16px;
+  }
+
+  .topbar__nav {
+    min-width: 0;
+    gap: clamp(10px, 3.5vw, 16px);
+  }
+
+  .topbar__nav a {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+
+  .hero__meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero__meta-cell {
+    overflow-wrap: anywhere;
+  }
+
+  .hero__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero__body > *,
+  .hero__statement,
+  .card {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .card {
+    padding: 24px;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+
+  .contact :where(button, [type='submit']) {
+    width: 100%;
+  }
+
+  .about__copy p,
+  .about__body p {
+    line-height: 1.8;
   }
 }
 
