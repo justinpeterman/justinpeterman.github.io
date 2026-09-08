@@ -101,13 +101,15 @@ a {
 
 // ─── topbar ────────────────────────────────────────────────────────────
 .topbar {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 50%;
   z-index: 40;
   width: 100%;
   max-width: var(--max);
   margin: 0 auto;
   box-sizing: border-box;
+  transform: translateX(-50%);
   display: flex;
   align-items: stretch;
   background: var(--teal);
@@ -133,6 +135,10 @@ a {
   }
 }
 
+main {
+  padding-top: 55px;
+}
+
 .nav {
   flex: 1;
   display: flex;
@@ -144,14 +150,39 @@ a {
     align-self: stretch;
     display: flex;
     align-items: center;
-    padding: 0 clamp(13px, 3.6vw, 26px);
-    border-left: 1px solid var(--rule-ink);
+    justify-content: center;
+    text-align: center;
+    padding: 0 clamp(16px, 4vw, 30px);
+    flex: 0 0 clamp(92px, 24vw, 124px);
+    position: relative;
+    margin-left: -22px;
+    box-sizing: border-box;
+    clip-path: polygon(22px 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
     font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     text-decoration: none;
+    touch-action: manipulation;
+
+    &:last-child {
+      clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%);
+      padding-left: calc(clamp(16px, 4vw, 30px) + 10px);
+      padding-right: calc(clamp(16px, 4vw, 30px) - 10px);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      bottom: -1px;
+      left: 22px;
+      width: 1px;
+      background: var(--rule-ink);
+      transform: skewX(-22deg);
+      transform-origin: top;
+    }
 
     &:active { background: var(--ink); color: var(--teal); }
 
@@ -523,12 +554,11 @@ html {
     padding-inline: 16px;
   }
 
-  .topbar__nav {
+  .nav {
     min-width: 0;
-    gap: clamp(10px, 3.5vw, 16px);
   }
 
-  .topbar__nav a {
+  .nav__link {
     font-size: 11px;
     letter-spacing: 0.04em;
   }
@@ -565,6 +595,14 @@ html {
   .about__copy p,
   .about__body p {
     line-height: 1.8;
+  }
+}
+
+@media (max-width: 480px) {
+  .rule-frame,
+  .topbar {
+    border-left: 0;
+    border-right: 0;
   }
 }
 
