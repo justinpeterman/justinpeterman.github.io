@@ -245,6 +245,7 @@ main {
   &__meta {
     display: flex;
     flex-wrap: wrap;
+    background: rgba(0, 0, 0, 0.04);
     border-top: 1px solid var(--rule-ink);
   }
 
@@ -292,6 +293,8 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   border-bottom: 1px solid var(--rule-cream);
+
+  &:nth-of-type(odd) { background: rgba(255, 255, 255, 0.03); }
 
   &__main {
     padding: clamp(24px, 3vw, 34px) var(--pad-x) 20px;
@@ -383,6 +386,7 @@ main {
   flex: 1 1 clamp(200px, calc((700px - 100vw) * 999), 100%);
   min-width: 0;
   padding: clamp(17px, 2vw, 28px) var(--pad-x);
+  background: rgba(0, 0, 0, 0.04);
   border-right: 1px solid var(--rule-ink);
   border-bottom: 1px solid var(--rule-ink);
 
