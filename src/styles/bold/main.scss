@@ -86,6 +86,8 @@ a {
 
   &--ink  { background: var(--ink); color: var(--cream); border-color: var(--ink);
             &:hover { background: #0B3A33; color: var(--cream); } }
+  &--outline { background: transparent; color: var(--ink);
+               &:hover { background: var(--ink); color: var(--cream); } }
   &--send { background: var(--teal); color: var(--ink); align-self: flex-start; padding: 15px 30px;
             &:hover { background: var(--ink); color: var(--cream); } }
 }
@@ -243,6 +245,7 @@ main {
   }
 
   &__cta { padding: clamp(30px, 4vw, 48px) var(--pad-x) clamp(34px, 4.5vw, 56px); }
+  &__actions { display: flex; flex-wrap: wrap; gap: 10px; }
 }
 
 // ─── work ──────────────────────────────────────────────────────────────
