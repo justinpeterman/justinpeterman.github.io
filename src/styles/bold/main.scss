@@ -12,7 +12,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--ink); &:hover { color: #0B3A33; } }
+a {
+  color: var(--ink);
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover { color: #0B3A33; }
+  }
+}
 ::selection { background: var(--ink); color: var(--teal); }
 
 // ─── shared refcard chrome ─────────────────────────────────────────────
@@ -494,6 +500,10 @@ html {
 @media (max-width: 640px) {
   html {
     scroll-padding-top: 55px;
+  }
+
+  .work-item__main {
+    border-right: none;
   }
 
   .rule-frame,
