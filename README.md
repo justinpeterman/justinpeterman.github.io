@@ -13,6 +13,7 @@ A single-page portfolio with a generative p5.js background, frosted-glass UI, an
 - **[Astro](https://astro.build)** — static site build/templating (output: plain HTML/CSS/JS)
 - **[p5.js](https://p5js.org)** — generative canvas background
 - **SCSS** — styles split into partials, compiled by Astro via sass
+- **mise** — pinned Node/pnpm toolchain and project task runner
 - **Google Fonts** — Instrument Serif (display), Inter (body), JetBrains Mono (labels)
 - **GitHub Pages** — hosting, deployed from `main` branch
 - **Custom domain** — `justinpeterman.com` via DNS → GitHub Pages
@@ -41,14 +42,23 @@ public/
 
 The hidden control panel (toggled with the `~` key) lets you tweak all parameters live in the browser.
 
+## First-time setup
+
+Install [mise](https://mise.jdx.dev/getting-started.html), then install the project toolchain:
+
+```bash
+mise install
+```
+
 ## Commands
 
 | Command           | Action                                      |
 | :---------------- | :------------------------------------------ |
-| `pnpm install`     | Install dependencies                        |
-| `pnpm run dev`     | Start dev server at `localhost:4321`        |
-| `pnpm run build`   | Build to `./dist/`                          |
-| `pnpm run preview` | Preview the production build locally        |
+| `mise run install` | Install locked dependencies                 |
+| `mise run dev`     | Start dev server at `localhost:4321`        |
+| `mise run build`   | Build to `./dist/`                          |
+| `mise run preview` | Preview the production build locally        |
+| `mise run deploy`  | Build the deployable static site            |
 
 ## Deployment
 
