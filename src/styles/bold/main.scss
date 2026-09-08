@@ -98,9 +98,15 @@ a { color: var(--ink); &:hover { color: #0B3A33; } }
   position: sticky;
   top: 0;
   z-index: 40;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  box-sizing: border-box;
   display: flex;
   align-items: stretch;
   background: var(--teal);
+  border-left: 1px solid var(--rule-ink);
+  border-right: 1px solid var(--rule-ink);
   border-bottom: 1px solid var(--rule-ink);
 
   &__monogram {
