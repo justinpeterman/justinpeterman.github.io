@@ -146,7 +146,12 @@ a { color: var(--ink); &:hover { color: #0B3A33; } }
     letter-spacing: 0.18em;
     text-transform: uppercase;
     text-decoration: none;
-    &:hover { background: var(--ink); color: var(--teal); }
+
+    &:active { background: var(--ink); color: var(--teal); }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover { background: var(--ink); color: var(--teal); }
+    }
   }
 }
 
