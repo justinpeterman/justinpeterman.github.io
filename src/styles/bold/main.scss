@@ -36,8 +36,9 @@ a {
 
 .label {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: rgba(4, 18, 15, 0.7);
   margin-bottom: 8px;
@@ -47,7 +48,7 @@ a {
 
 .section-head {
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
   gap: 20px;
   flex-wrap: wrap;
   padding: var(--pad-y) var(--pad-x) 28px;
@@ -63,10 +64,11 @@ a {
 }
 
 .section-span {
-  margin-bottom: 4px;
+  margin-bottom: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.18em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: rgba(255, 246, 214, 0.55);
 }
@@ -75,7 +77,7 @@ a {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 13px 24px;
@@ -162,8 +164,8 @@ main {
     clip-path: polygon(22px 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
     font-family: var(--font-mono);
     font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
+    font-weight: 600;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
     text-decoration: none;
     touch-action: manipulation;
@@ -234,6 +236,7 @@ main {
 
   &__statement {
     padding: clamp(30px, 4vw, 48px) var(--pad-x) clamp(34px, 4.5vw, 56px);
+    min-width: 0;
 
     p {
       margin: 0;
@@ -241,6 +244,7 @@ main {
       font-weight: 600;
       line-height: 1.32;
       letter-spacing: -0.02em;
+      overflow-wrap: anywhere;
     }
   }
 
@@ -277,9 +281,9 @@ main {
 
   &__years {
     font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.16em;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
     color: var(--teal);
     margin-bottom: 14px;
@@ -287,8 +291,9 @@ main {
 
   &__company {
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
     color: rgba(255, 246, 214, 0.6);
   }
@@ -303,8 +308,9 @@ main {
 
 .tag {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--teal);
   border: 1px solid rgba(0, 193, 169, 0.5);
@@ -357,8 +363,9 @@ main {
   &__label {
     margin-top: 10px;
     font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.16em;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
     line-height: 1.5;
     color: rgba(4, 18, 15, 0.7);
@@ -376,8 +383,9 @@ main {
   border-right: 1px solid var(--rule-ink);
   border-bottom: 1px solid var(--rule-ink);
   font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   text-decoration: none;
 
@@ -423,9 +431,9 @@ main {
 
   &__label {
     font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
   }
 
@@ -463,8 +471,9 @@ main {
     gap: 14px;
     padding: 20px var(--pad-x);
     font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.16em;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.10em;
     text-transform: uppercase;
   }
 }
@@ -485,18 +494,17 @@ html {
 .eyebrow,
 .hero__meta-label,
 .work-item__years,
-.tag,
 .social-link,
 .contact-form label,
 .contact__form label {
   font-size: max(12px, 0.75rem);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.10em;
 }
 
 .contact-form label,
 .contact__form label {
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-weight: 500;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
   color: var(--ink);
 }
@@ -559,11 +567,20 @@ html {
 
   .nav {
     min-width: 0;
+    flex-wrap: nowrap;
   }
 
   .nav__link {
-    font-size: 11px;
-    letter-spacing: 0.04em;
+    flex: 1 1 0;
+    min-width: 0;
+    padding-inline: 10px;
+    font-size: 12px;
+    letter-spacing: 0.10em;
+  }
+
+  .nav__link:last-child {
+    padding-left: 16px;
+    padding-right: 4px;
   }
 
   .hero__meta {
@@ -606,6 +623,49 @@ html {
   .topbar {
     border-left: 0;
     border-right: 0;
+  }
+
+  .topbar {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 0;
+    padding-inline: 0;
+    overflow: hidden;
+  }
+
+  .topbar__monogram {
+    flex: 0 0 84px;
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 8px;
+  }
+
+  .nav {
+    display: flex;
+    flex: 1 1 0;
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-end;
+  }
+
+  .nav__link,
+  .nav__link:last-child {
+    flex: 0 1 100px;
+    min-width: 0;
+    margin-left: 0;
+    padding-left: 20px;
+    padding-right: 0;
+    clip-path: polygon(22px 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
+  }
+
+  .nav__link:last-child {
+    padding-left: 20px;
+    clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .nav__link::before {
+    left: 22px;
+    transform: skewX(-22deg);
   }
 }
 
