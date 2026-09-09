@@ -370,7 +370,7 @@ main {
     }
   }
 
-  &__photo { display: block; width: 100%; max-width: 340px; aspect-ratio: 1; border-radius: 50%; }
+  &__photo { display: block; width: 100%; max-width: 340px; aspect-ratio: 1; }
 
   &__bio {
     padding: clamp(30px, 4vw, 44px) var(--pad-x) clamp(28px, 3.5vw, 40px);
@@ -533,7 +533,7 @@ html {
   width: 100%;
   height: auto;
   aspect-ratio: 1 / 1;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .eyebrow,
