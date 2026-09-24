@@ -1,85 +1,108 @@
 # justinpeterman.com
 
-Personal portfolio site — live at **[justinpeterman.com](https://justinpeterman.com)**.
+Personal portfolio site for Justin Peterman, live at **[justinpeterman.com](https://justinpeterman.com)**.
 
-![justinpeterman.com](screenshot.jpg)
+![Current justinpeterman.com homepage](screenshot.jpg)
+
+The previous visual direction is preserved in [screenshot-classic.jpg](screenshot-classic.jpg).
 
 ## What it is
 
-A single-page portfolio with a generative p5.js background, frosted-glass UI, and film-grain overlay. Built with Astro as a static site generator — no client-side framework, no hydration. All interactivity is vanilla JS.
+A single-page portfolio built with Astro and shipped as static HTML, CSS, and JavaScript. The active `bold` theme uses a structured editorial layout and a procedural Canvas 2D hero inspired by browser developer tools. The heading and all other content remain semantic HTML; the canvas is decorative.
+
+The repository also retains the earlier `classic` theme, including its p5.js generative background and development-only control panel.
 
 ## Stack
 
-- **[Astro](https://astro.build)** — static site build/templating (output: plain HTML/CSS/JS)
-- **[p5.js](https://p5js.org)** — generative canvas background
-- **SCSS** — styles split into partials, compiled by Astro via sass
-- **mise** — pinned Node/pnpm toolchain and project task runner
-- **Google Fonts** — Instrument Serif (display), Inter (body), JetBrains Mono (labels)
-- **GitHub Pages** — hosting, deployed from `main` branch
-- **Custom domain** — `justinpeterman.com` via DNS → GitHub Pages
+- **[Astro](https://astro.build)** — static site generation and content collections
+- **TypeScript and vanilla JavaScript** — canvas renderer and browser behavior; no client-side framework
+- **Canvas 2D** — procedural hero grid and animated developer workbench
+- **SCSS** — theme and component styles
+- **[Partytown](https://partytown.qwik.dev/)** — Google Analytics execution off the main thread in both themes, using the shared `Analytics.astro` component
+- **mise** — pinned Node and pnpm toolchain plus project tasks
+- **Google Fonts** — Archivo and Barlow Semi Condensed in the active theme
+- **GitHub Actions and GitHub Pages** — build and hosting
 
-## File structure
+## Project structure
 
-```
+```text
 src/
-├── components/   # Astro components — Hero, Work, About, Contact, ControlPanel
-├── content/      # Content collections — work items as markdown
-├── data/         # Static data — site, about, blobs/JP_CONFIG
-├── layouts/      # Base.astro shell
-├── pages/        # index.astro
-├── styles/       # SCSS partials
-└── utils/        # Helpers
+├── components/
+│   ├── bold/                 # Active-theme sections and canvas banner
+│   └── *.astro               # Classic-theme sections
+├── content/work/             # Portfolio entries as Markdown
+├── data/                     # Shared site and biography content
+├── layouts/                  # Bold and classic document shells
+├── pages/index.astro         # Resolves the active theme
+├── styles/                   # Classic styles and the bold theme styles
+└── themes/                   # Theme-level page composition
 
 public/
-├── scripts/      # p5.js sketch
-├── photo.jpg
-└── favicon.svg
+├── scripts/sketch.js         # Classic-theme p5.js renderer
+├── justin_peterman_hedcut_transparent_square.webp
+└── social, favicon, and legacy-theme assets
 ```
 
-## How the generative background works
+## Themes
 
-`JP_CONFIG` (defined in `src/data/blobs.ts`) controls all blob parameters — count, size, speed, color, noise scale, etc. `Base.astro` injects it into the page as `window.JP_CONFIG` via a `define:vars` script tag. `public/scripts/sketch.js` reads that config and drives the p5.js canvas at z-index 0 behind all content.
+The active theme is selected by `theme` in [`astro.config.mjs`](astro.config.mjs). It currently resolves `@active-theme` to `src/themes/bold/Home.astro`. Change that value to `classic` to run the preserved earlier design.
 
-The hidden control panel (toggled with the `~` key) lets you tweak all parameters live in the browser.
+The active hero mounts one decorative `<canvas>` behind the live heading. Its renderer:
+
+- measures the real banner and heading geometry;
+- caps the device-pixel ratio at 2;
+- pauses offscreen and while the document is hidden;
+- honors `prefers-reduced-motion` with a deterministic still;
+- removes animation frames, observers, and listeners when disconnected;
+- omits the workbench on small screens and retains a CSS grid fallback.
+
+Renderer selection, timing, density, palette use, and workbench controls are documented in [`src/components/bold/workbench-banner/README.md`](src/components/bold/workbench-banner/README.md).
 
 ## First-time setup
 
-Install [mise](https://mise.jdx.dev/getting-started.html), then install the project toolchain:
+Install [mise](https://mise.jdx.dev/getting-started.html), then install the pinned toolchain and locked dependencies:
 
 ```bash
 mise install
+mise run install
 ```
 
 ## Commands
 
-| Command           | Action                                      |
-| :---------------- | :------------------------------------------ |
-| `mise run install` | Install locked dependencies                 |
-| `mise run dev`     | Start dev server at `localhost:4321`        |
-| `mise run build`   | Build to `./dist/`                          |
-| `mise run preview` | Preview the production build locally        |
-| `mise run deploy`  | Build the deployable static site            |
+| Command | Action |
+| :--- | :--- |
+| `mise run dev` | Start Astro's local development server |
+| `mise run build` | Build the static site into `dist/` |
+| `mise run preview` | Serve the production build locally |
+| `mise run deploy` | Run the deployable production build |
+| `mise exec -- node --experimental-strip-types --test src/components/bold/workbench-banner/*.test.ts` | Run the canvas renderer tests |
 
-## Deployment
+Astro prints the actual local URL when a server starts. The port can change when another process is already using the default.
 
-Push to `main` → GitHub Pages auto-deploys. There is no CI pipeline — the `dist/` directory is built locally if needed, but GitHub Pages runs `astro build` directly via the Pages configuration.
+## Adding work
 
-DNS: A records point to `185.199.108–111.153` (GitHub Pages IPs). `www` CNAME points to `justinpeterman.github.io`.
-
-## Adding work items
-
-Create a new markdown file in `src/content/work/` with this frontmatter:
+Create a Markdown file in `src/content/work/` using the content schema in `src/content.config.ts`:
 
 ```md
 ---
 title: Project Title
 company: Company Name
+companyUrl: https://example.com
 years: "2020 — 2022"
 order: 1
-tags: [Tag1, Tag2, Tag3]
+tags: [Architecture, TypeScript]
+body: "One sentence describing scope and ownership."
+bodyLink:
+  label: linked phrase in the body
+  url: https://example.com/coverage
+highlights:
+  - lead: Outcome or contribution
+    text: A concise explanation supported by concrete evidence where available.
 ---
-
-Body copy describing the work.
 ```
 
-The `Work.astro` component queries the collection and renders items sorted by `order`.
+`companyUrl` and `bodyLink` are optional. Entries render in ascending `order`. Keep each entry to a short scope summary, one to three highlights, and a focused set of relevant skills.
+
+## Deployment
+
+Pushes to `main` run [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). GitHub Actions installs the frozen pnpm lockfile, runs the Astro build, uploads `dist/`, and deploys it to GitHub Pages. The workflow can also be started manually from GitHub.
