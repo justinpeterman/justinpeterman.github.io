@@ -1,32 +1,31 @@
 ---
 import { getCollection } from 'astro:content';
-import WorkItem from './WorkItem.astro';
-
-const workEntries = await getCollection('work');
-const sorted = workEntries.sort((a, b) => a.data.order - b.data.order);
-
-const delays = ['', 'scroll-reveal--delay-1', 'scroll-reveal--delay-2', 'scroll-reveal--delay-3', 'scroll-reveal--delay-4'];
+import LinkedMention from './LinkedMention.astro';
+const sorted = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
-<section id="work" aria-labelledby="work-label">
-  <div class="work__inner">
-    <div class="work__label scroll-reveal">
-      <h2 id="work-label" class="work__label-text">Work</h2>
-      <span class="work__rule" aria-hidden="true"></span>
+<section id="work" class="work">
+  <div class="rule-frame rule-frame--dark">
+    <div class="section-head">
+      <h2>Work</h2>
+      <span class="section-span">2011 — 2026</span>
     </div>
-    <div class="work__list">
-      {sorted.map((entry, i) => (
-        <WorkItem
-          title={entry.data.title}
-          company={entry.data.company}
-          companyUrl={entry.data.companyUrl}
-          years={entry.data.years}
-          tags={entry.data.tags}
-          body={entry.data.body}
-          bodyLink={entry.data.bodyLink}
-          highlights={entry.data.highlights}
-          delay={delays[i] ?? ''}
-        />
-      ))}
-    </div>
+    {sorted.map(entry => (
+      <article class="work-item">
+        <div class="work-item__main">
+          <div class="work-item__years">{entry.data.years}</div>
+          <h3>{entry.data.title}</h3>
+          <div class="work-item__company"><LinkedMention text={entry.data.company} label={entry.data.company} /></div>
+        </div>
+        <div class="work-item__body">
+          <p><LinkedMention text={entry.data.body} label={entry.data.bodyLink?.label ?? entry.data.company} href={entry.data.bodyLink?.url ?? entry.data.companyUrl} /></p>
+          <ul class="work-item__highlights">
+            {entry.data.highlights.map(({ lead, text }) => <li><span><strong>{lead}.</strong> {text}</span></li>)}
+          </ul>
+          <div class="tags">
+            {entry.data.tags.map(tag => <span class="tag">{tag}</span>)}
+          </div>
+        </div>
+      </article>
+    ))}
   </div>
 </section>

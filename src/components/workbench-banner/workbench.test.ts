@@ -1,16 +1,16 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { composeWorkbench, createWorkbenchState } from './workbench-model.ts';
-import { createWorkbenchRenderer } from './renderers/workbench.ts';
+import { createWorkbenchRenderer } from './workbench.ts';
 
 test('workbench redraw keys change only on a beat or cursor blink', () => {
   const renderer = createWorkbenchRenderer();
-  const key = renderer.frameKey!(0, 0);
-  assert.equal(renderer.frameKey!(9000, 999), key, 'hover-scaled time does not affect the cursor');
-  assert.notEqual(renderer.frameKey!(9000, 1000), key);
-  assert.equal(renderer.frameKey!(9000, 2000), key);
+  const key = renderer.frameKey(0);
+  assert.equal(renderer.frameKey(999), key, 'cursor stays visible before its next blink');
+  assert.notEqual(renderer.frameKey(1000), key);
+  assert.equal(renderer.frameKey(2000), key);
   renderer.advance();
-  assert.notEqual(renderer.frameKey!(0, 0), key, 'a new inspection step repaints');
+  assert.notEqual(renderer.frameKey(0), key, 'a new inspection step repaints');
 });
 
 test('workbench docks outside measured text, simplifies and omits when crowded', () => {
@@ -45,11 +45,11 @@ test('a second longer foreground line determines the dock boundary', () => {
 test('workbench hit testing follows the measured dock bounds', () => {
   const renderer = createWorkbenchRenderer();
   renderer.measure(1280, 405, [{ x: 24, y: 60, width: 720, height: 300 }]);
-  assert.equal(renderer.hitTest?.(1279, 200), true);
-  assert.equal(renderer.hitTest?.(100, 200), false);
+  assert.equal(renderer.hitTest(1279, 200), true);
+  assert.equal(renderer.hitTest(100, 200), false);
 
   renderer.measure(390, 200, []);
-  assert.equal(renderer.hitTest?.(389, 100), false);
+  assert.equal(renderer.hitTest(389, 100), false);
 });
 
 test('console alternates commands and results, remains seeded and repeats without a reset', () => {

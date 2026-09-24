@@ -1,56 +1,38 @@
 ---
-import { Image } from 'astro:assets';
 import { bio, facts, socials } from '../data/about';
 ---
-<section id="about" aria-labelledby="about-label">
-  <div class="about__inner">
-    <div class="about__label scroll-reveal">
-      <h2 id="about-label" class="about__label-text">About</h2>
-      <span class="about__rule" aria-hidden="true"></span>
+<section id="about" class="about">
+  <div class="rule-frame">
+    <div class="section-head">
+      <h2>About</h2>
     </div>
-    <div class="about__body">
-      <div class="about__intro-grid scroll-reveal scroll-reveal--delay-1">
-        <!-- Portrait photo -->
-        <div class="about__photo-wrap">
-          <Image
-            src="/photo.jpg"
-            alt="Justin Peterman"
-            width={440}
-            height={440}
-            class="about__photo"
-          />
-        </div>
-        <!-- Headline + bio -->
-        <div>
-          <h2 class="about__headline">Building the tools<br>that help people write.</h2>
-          <div class="about__bio">
-            {bio.map(para => <p set:html={para}></p>)}
-          </div>
-        </div>
-      </div>
 
-      <div class="about__facts scroll-reveal scroll-reveal--delay-2">
-        {facts.map(f => (
-          <div class="fact">
-            <span class="fact__num">{f.num}</span>
-            <span class="fact__label" set:html={f.label.replace('\n', '<br>')}></span>
-          </div>
-        ))}
+    <div class="about__grid">
+      <div class="about__left">
+        <img src="/justin_peterman_hedcut_transparent_square.webp" alt="Justin Peterman" width="340" height="340" class="about__photo">
+        <h3>Building the tools that help people write.</h3>
       </div>
+      <div class="about__bio">
+        {bio.map(p => <p set:html={p}></p>)}
+      </div>
+    </div>
 
-      <div class="about__links scroll-reveal scroll-reveal--delay-4">
-        {socials.map(s => (
-          <a
-            href={s.href}
-            class="social-icon"
-            aria-label={s.label}
-            title={s.title}
-            target={s.external ? '_blank' : undefined}
-            rel={s.external ? 'noopener' : undefined}
-            set:html={s.icon}
-          />
-        ))}
-      </div>
+    <div class="facts">
+      {facts.map(f => (
+        <div class="fact">
+          <div class="fact__num">{f.num}</div>
+          <div class="fact__label" set:html={f.label.replace('\n', '<br>')}></div>
+        </div>
+      ))}
+    </div>
+
+    <div class="socials">
+      {socials.map(s => (
+        <a class="social" href={s.href} title={s.title} aria-label={s.label}
+           target={s.external ? '_blank' : undefined} rel={s.external ? 'noopener' : undefined}>
+          <span class="social__dot"></span>{s.label.replace(' (opens in new tab)', '')}
+        </a>
+      ))}
     </div>
   </div>
 </section>

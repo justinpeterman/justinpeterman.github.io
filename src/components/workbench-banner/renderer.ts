@@ -1,5 +1,5 @@
 import { config, type Rect } from './scene';
-import { renderers } from './renderers';
+import { createWorkbenchRenderer } from './workbench';
 
 export function mountBanner(host: HTMLElement) {
   const canvas = host.querySelector('canvas');
@@ -18,7 +18,7 @@ export function mountBanner(host: HTMLElement) {
   const media = matchMedia('(prefers-reduced-motion: reduce)');
   const hoverMedia = matchMedia('(hover: hover) and (pointer: fine)');
   let reducedMotion = media.matches;
-  let artwork = renderers[config.variation]();
+  let artwork = createWorkbenchRenderer();
   let measured = false;
   let elapsed = 0;
   let animationElapsed = 0;
@@ -30,11 +30,10 @@ export function mountBanner(host: HTMLElement) {
   let disposed = false;
   let paintedKey: number | undefined;
   function paint(force = false) {
-    const time = reducedMotion ? 0 : animationElapsed;
     const ambientTime = reducedMotion ? 0 : elapsed;
-    const key = artwork.frameKey?.(time, ambientTime);
-    if (!force && key !== undefined && key === paintedKey) return;
-    artwork.draw(ctx!, palette, time, ambientTime);
+    const key = artwork.frameKey(ambientTime);
+    if (!force && key === paintedKey) return;
+    artwork.draw(ctx!, palette, ambientTime);
     paintedKey = key;
   }
 
@@ -62,7 +61,7 @@ export function mountBanner(host: HTMLElement) {
   }
   function sync() {
     stop();
-    const hasMotion = artwork.hasMotion?.() ?? true;
+    const hasMotion = artwork.hasMotion();
     if (hasMotion && measured && visible && !document.hidden && !reducedMotion && !ctx!.isContextLost() && elapsed < config.introDurationMs) frame = requestAnimationFrame(tick);
   }
   function measure() {
@@ -96,7 +95,7 @@ export function mountBanner(host: HTMLElement) {
     if (reducedMotion) workbenchHovered = false;
     if (reducedMotion) {
       // A deliberate seeded still, with no cursor pulse or pending updates.
-      artwork = renderers[config.variation]();
+      artwork = createWorkbenchRenderer();
       elapsed = 0;
       animationElapsed = 0;
       lastUpdate = 0;
@@ -113,7 +112,7 @@ export function mountBanner(host: HTMLElement) {
       return;
     }
     const bounds = container!.getBoundingClientRect();
-    workbenchHovered = artwork.hitTest?.(event.clientX - bounds.left, event.clientY - bounds.top) ?? false;
+    workbenchHovered = artwork.hitTest(event.clientX - bounds.left, event.clientY - bounds.top);
   }
   function pointerLeft() { workbenchHovered = false; }
   function lost() { host.removeAttribute('data-ready'); sync(); }

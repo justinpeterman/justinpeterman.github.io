@@ -12,7 +12,7 @@ export function primitives(ctx: CanvasRenderingContext2D) {
   return { line, box };
 }
 
-export function ground(ctx: CanvasRenderingContext2D, scene: Scene, palette: Palette, registration = true) {
+export function ground(ctx: CanvasRenderingContext2D, scene: Scene, palette: Palette) {
   const { width, height } = scene;
   const { gridSpacing: g, gridOpacity } = config;
   const { line } = primitives(ctx);
@@ -24,8 +24,4 @@ export function ground(ctx: CanvasRenderingContext2D, scene: Scene, palette: Pal
   ctx.globalAlpha = gridOpacity;
   for (let x = g; x < width; x += g) line(x, 0, x, height);
   for (let y = g; y < height; y += g) line(0, y, width, y);
-  ctx.globalAlpha = gridOpacity * 2;
-  for (const [x, y] of registration ? [[g, g], [Math.floor((width - g) / g) * g, Math.floor((height - g) / g) * g]] : []) {
-    line(x - 3, y, x + 3, y); line(x, y - 3, x, y + 3);
-  }
 }

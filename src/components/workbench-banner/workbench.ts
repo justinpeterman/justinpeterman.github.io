@@ -1,6 +1,6 @@
-import { config, type Scene, type BannerRenderer, type Palette, type Rect } from '../scene.ts';
-import { ground, primitives } from '../primitives.ts';
-import { composeWorkbench, createWorkbenchState } from '../workbench-model.ts';
+import { config, type Scene, type BannerRenderer, type Palette, type Rect } from './scene.ts';
+import { ground, primitives } from './primitives.ts';
+import { composeWorkbench, createWorkbenchState } from './workbench-model.ts';
 
 export function createWorkbenchRenderer(): BannerRenderer {
   const state = createWorkbenchState();
@@ -147,15 +147,15 @@ export function createWorkbenchRenderer(): BannerRenderer {
   }
 
   return {
-    frameKey(_time, ambientTime) { return state.step * 2 + Math.floor(ambientTime / 1000) % 2; },
+    frameKey(ambientTime) { return state.step * 2 + Math.floor(ambientTime / 1000) % 2; },
     hasMotion() { return !!scene?.motifs.length; },
     hitTest(x, y) {
       return scene?.motifs.some(panel => x >= panel.x && x <= panel.x + panel.width && y >= panel.y && y <= panel.y + panel.height) ?? false;
     },
     measure(width, height, safe) { scene = composeWorkbench(width, height, safe); },
     advance() { state.advance(); },
-    draw(ctx, palette, time, ambientTime = time) {
-      ground(ctx, scene, palette, false);
+    draw(ctx, palette, ambientTime) {
+      ground(ctx, scene, palette);
       const { line } = primitives(ctx);
       for (const panel of scene.motifs) {
         const { x, y, width, height } = panel;

@@ -8,44 +8,40 @@ The previous visual direction is preserved in [screenshot-classic.jpg](screensho
 
 ## What it is
 
-A single-page portfolio built with Astro and shipped as static HTML, CSS, and JavaScript. The active `bold` theme uses a structured editorial layout and a procedural Canvas 2D hero inspired by browser developer tools. The heading and all other content remain semantic HTML; the canvas is decorative.
+A single-page portfolio built with Astro and shipped as static HTML, CSS, and JavaScript. The site uses a structured editorial layout and a procedural Canvas 2D hero inspired by browser developer tools. The heading and all other content remain semantic HTML; the canvas is decorative.
 
-The repository also retains the earlier `classic` theme, including its p5.js generative background and development-only control panel.
+The classic theme and its p5.js background are retired. Their source remains available in Git history at commit `30108b1`; the archived screenshot above is retained.
 
 ## Stack
 
 - **[Astro](https://astro.build)** — static site generation and content collections
 - **TypeScript and vanilla JavaScript** — canvas renderer and browser behavior; no client-side framework
 - **Canvas 2D** — procedural hero grid and animated developer workbench
-- **SCSS** — theme and component styles
-- **[Partytown](https://partytown.qwik.dev/)** — Google Analytics execution off the main thread in both themes, using the shared `Analytics.astro` component
+- **SCSS** — site and component styles
+- **[Partytown](https://partytown.qwik.dev/)** — Google Analytics execution off the main thread, using the shared `Analytics.astro` component
 - **mise** — pinned Node and pnpm toolchain plus project tasks
-- **Google Fonts** — Archivo and Barlow Semi Condensed in the active theme
+- **Google Fonts** — Archivo and Barlow Semi Condensed
 - **GitHub Actions and GitHub Pages** — build and hosting
 
 ## Project structure
 
 ```text
 src/
-├── components/
-│   ├── bold/                 # Active-theme sections and canvas banner
-│   └── *.astro               # Classic-theme sections
+├── components/               # Page sections, document metadata, and analytics
+│   └── workbench-banner/     # Canvas renderer, model, config, and tests
 ├── content/work/             # Portfolio entries as Markdown
-├── data/                     # Shared site and biography content
-├── layouts/                  # Bold and classic document shells
-├── pages/index.astro         # Resolves the active theme
-├── styles/                   # Classic styles and the bold theme styles
-└── themes/                   # Theme-level page composition
+├── data/                     # Site and biography content
+├── layouts/Base.astro        # Document shell
+├── pages/index.astro         # Homepage composition
+├── scripts/contact-form.ts   # Contact submission behavior
+└── styles/                   # SCSS and design tokens
 
 public/
-├── scripts/sketch.js         # Classic-theme p5.js renderer
 ├── justin_peterman_hedcut_transparent_square.webp
-└── social, favicon, and legacy-theme assets
+└── social and favicon assets
 ```
 
-## Themes
-
-The active theme is selected by `theme` in [`astro.config.mjs`](astro.config.mjs). It currently resolves `@active-theme` to `src/themes/bold/Home.astro`. Change that value to `classic` to run the preserved earlier design.
+## Hero workbench
 
 The active hero mounts one decorative `<canvas>` behind the live heading. Its renderer:
 
@@ -56,7 +52,7 @@ The active hero mounts one decorative `<canvas>` behind the live heading. Its re
 - removes animation frames, observers, and listeners when disconnected;
 - omits the workbench on small screens and retains a CSS grid fallback.
 
-Renderer selection, timing, density, palette use, and workbench controls are documented in [`src/components/bold/workbench-banner/README.md`](src/components/bold/workbench-banner/README.md).
+Timing, palette use, and workbench controls are documented in [`src/components/workbench-banner/README.md`](src/components/workbench-banner/README.md).
 
 ## First-time setup
 
