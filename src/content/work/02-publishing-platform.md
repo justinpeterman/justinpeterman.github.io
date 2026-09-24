@@ -3,7 +3,7 @@ title: Publishing Platform
 company: LinkedIn
 years: "2019 — 2026"
 order: 2
-tags: [Architecture, Tiptap, ProseMirror, Ember, GraphQL]
+tags: [Technical Leadership, Architecture, Tiptap, ProseMirror, Ember, GraphQL]
 body: "Web lead for LinkedIn’s article authoring, reading, and newsletter experiences, supporting an ecosystem of 150K+ newsletters and more than 1.5B subscriptions."
 highlights:
   - lead: "Editor architecture"
