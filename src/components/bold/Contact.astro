@@ -43,29 +43,7 @@
 </section>
 
 <script>
-  const form    = document.getElementById('contact-form') as HTMLFormElement;
-  const success = document.getElementById('contact-success') as HTMLDivElement;
-  const btn     = document.getElementById('cf-submit') as HTMLButtonElement;
-  const error   = document.getElementById('cf-error') as HTMLParagraphElement;
-
-  form.addEventListener('submit', async (e: Event) => {
-    e.preventDefault();
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-    error.textContent = '';
-    try {
-      const res = await fetch('https://formspree.io/f/xqewvpqp', {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form),
-      });
-      if (!res.ok) throw new Error('Something went wrong — please try again.');
-      form.style.display = 'none';
-      success.classList.add('contact__success--visible');
-    } catch (err: unknown) {
-      btn.textContent = 'Send message →';
-      btn.disabled = false;
-      error.textContent = err instanceof Error ? err.message : 'Something went wrong — please try again.';
-    }
-  });
+  import { mountContactForm } from '../../scripts/contact-form';
+  const section = document.getElementById('contact');
+  if (section) mountContactForm(section);
 </script>

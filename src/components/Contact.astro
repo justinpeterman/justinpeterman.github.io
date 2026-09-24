@@ -50,45 +50,7 @@
 </section>
 
 <script>
-  const form    = document.getElementById('contact-form') as HTMLFormElement;
-  const success = document.getElementById('contact-success') as HTMLDivElement;
-  const btn     = document.getElementById('cf-submit') as HTMLButtonElement;
-  const error   = document.getElementById('cf-error') as HTMLParagraphElement;
-
-  const SEND_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
-
-  form.addEventListener('submit', async (e: Event) => {
-    e.preventDefault();
-
-    btn.disabled = true;
-    btn.innerHTML = `${SEND_ICON} Sending…`;
-    error.textContent = '';
-
-    try {
-      const res = await fetch('https://formspree.io/f/xqewvpqp', {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form),
-      });
-
-      if (res.ok) {
-        form.reset();
-        form.style.display = 'none';
-        success.classList.add('contact__success--visible');
-        const heading = success.querySelector<HTMLElement>('.contact__success-heading');
-        if (heading) {
-          heading.setAttribute('tabindex', '-1');
-          heading.focus();
-        }
-      } else {
-        const data = await res.json().catch(() => ({}));
-        const msg = (data as any)?.errors?.[0]?.message ?? 'Something went wrong — please try again.';
-        throw new Error(msg);
-      }
-    } catch (err: unknown) {
-      btn.innerHTML = `${SEND_ICON} Send message`;
-      btn.disabled = false;
-      error.textContent = err instanceof Error ? err.message : 'Something went wrong — please try again.';
-    }
-  });
+  import { mountContactForm } from '../scripts/contact-form';
+  const section = document.getElementById('contact');
+  if (section) mountContactForm(section);
 </script>
