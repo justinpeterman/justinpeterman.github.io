@@ -1,0 +1,26 @@
+<workbench-banner aria-hidden="true">
+  <canvas aria-hidden="true"></canvas>
+</workbench-banner>
+
+<style>
+  workbench-banner {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  canvas { display: block; width: 100%; height: 100%; visibility: hidden; pointer-events: none; }
+  workbench-banner[data-ready] canvas { visibility: visible; }
+</style>
+
+<script>
+  import { mountBanner } from './workbench-banner/renderer';
+  class WorkbenchBanner extends HTMLElement {
+    cleanup?: () => void;
+    connectedCallback() { this.cleanup = mountBanner(this); }
+    disconnectedCallback() { this.cleanup?.(); }
+  }
+  if (!customElements.get('workbench-banner')) customElements.define('workbench-banner', WorkbenchBanner);
+</script>

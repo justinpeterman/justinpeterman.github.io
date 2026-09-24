@@ -229,11 +229,18 @@ main {
   background: var(--teal);
 
   &__name {
+    position: relative;
+    isolation: isolate;
     padding: clamp(52px, 8vw, 92px) var(--pad-x) clamp(28px, 4vw, 44px);
-    background-image: radial-gradient(rgba(4, 18, 15, 0.18) 1.3px, transparent 1.3px);
-    background-size: 11px 11px;
+    // Static fallback; the initialized opaque canvas covers this grid.
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--ink) 4.5%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--ink) 4.5%, transparent) 1px, transparent 1px);
+    background-size: 24px 24px;
 
     h1 {
+      position: relative;
+      z-index: 1;
       margin: 0;
       font-size: clamp(52px, 11.4vw, 168px);
       font-weight: 800;
