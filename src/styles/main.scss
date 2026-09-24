@@ -121,10 +121,10 @@ a {
   transform: translateX(-50%);
   display: flex;
   align-items: stretch;
-  background: var(--teal);
-  border-left: 1px solid var(--rule-ink);
-  border-right: 1px solid var(--rule-ink);
-  border-bottom: 1px solid var(--rule-ink);
+  background: var(--ink);
+  border-left: 1px solid var(--rule-cream);
+  border-right: 1px solid var(--rule-cream);
+  border-bottom: 1px solid var(--rule-cream);
 
   &__monogram {
     background: var(--ink);
@@ -163,6 +163,7 @@ main {
   justify-content: flex-end;
 
   &__link {
+    color: var(--cream);
     align-self: stretch;
     display: flex;
     align-items: center;
@@ -196,30 +197,30 @@ main {
       bottom: -1px;
       left: 22px;
       width: 1px;
-      background: var(--rule-ink);
+      background: var(--rule-cream);
       transform: skewX(-22deg);
       transform-origin: top;
     }
 
     &:active {
       z-index: 1;
-      background: var(--ink);
-      color: var(--cream);
+      background: var(--ink-soft);
+      color: var(--teal);
     }
 
     &:focus-visible {
       z-index: 1;
-      background: var(--ink);
-      color: var(--cream);
+      background: var(--cream);
+      color: var(--ink);
       clip-path: none;
-      outline: 3px solid var(--cream);
+      outline: 3px solid var(--ink);
       outline-offset: -5px;
 
       &::before { display: none; }
     }
 
     @media (hover: hover) and (pointer: fine) {
-      &:hover { background: var(--ink); color: var(--cream); }
+      &:hover { background: var(--cream); color: var(--ink); }
     }
   }
 }
