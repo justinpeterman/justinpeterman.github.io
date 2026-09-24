@@ -2,7 +2,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { background: var(--teal); }
+html { background: var(--teal); scroll-padding-top: 55px; }
 
 body {
   margin: 0;
@@ -95,7 +95,7 @@ a {
             &:hover, &:focus-visible { background: var(--ink-soft); color: var(--cream); } }
   &--outline { background: transparent; color: var(--ink);
                &:hover, &:focus-visible { background: var(--ink); color: var(--cream); } }
-  &--send { background: var(--teal); color: var(--ink); align-self: flex-start; padding: 15px 30px;
+  &--send { background: var(--teal); color: var(--ink); align-self: flex-start; min-height: 48px; padding: 15px 24px;
             &:hover, &:focus-visible { background: var(--ink); color: var(--cream); } }
 }
 
@@ -319,7 +319,7 @@ main {
 
   &__years {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: max(12px, 0.75rem);
     font-weight: 600;
     letter-spacing: 0.10em;
     text-transform: uppercase;
@@ -415,7 +415,7 @@ main {
     }
   }
 
-  &__photo { display: block; width: 100%; max-width: 340px; aspect-ratio: 1; }
+  &__photo { display: block; width: 100%; height: auto; max-width: 340px; aspect-ratio: 1; object-fit: contain; }
 
   &__bio {
     padding: clamp(30px, 4vw, 44px) var(--pad-x) clamp(28px, 3.5vw, 40px);
@@ -533,6 +533,7 @@ main {
 
   &__input, &__textarea {
     width: 100%;
+    min-height: 48px;
     font-family: var(--font-sans);
     font-size: 16px;
     color: var(--ink);
@@ -545,7 +546,7 @@ main {
     &:focus { box-shadow: inset 0 0 0 1px var(--ink); }
   }
 
-  &__textarea { resize: vertical; min-height: 150px; line-height: 1.6; }
+  &__textarea { resize: vertical; min-height: 144px; line-height: 1.6; }
 
   &__error { margin: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; min-height: 14px; }
 }
@@ -572,49 +573,13 @@ main {
   }
 }
 
-/* Readability and interaction refinements */
-html {
-  scroll-padding-top: 55px;
-}
-
-.about img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: contain;
-}
-
-.work-item__years {
-  font-size: max(12px, 0.75rem);
-  letter-spacing: 0.10em;
-}
-
+// Global keyboard focus; component-specific outlines retain their specificity.
 :where(a, button, input, textarea, select):focus-visible {
   outline: 3px solid var(--cream);
   outline-offset: 4px;
 }
 
-.contact :where(input, textarea, select) {
-  min-height: 48px;
-  font-size: 16px;
-}
-
-.contact textarea {
-  min-height: 144px;
-  resize: vertical;
-}
-
-.contact :where(button, [type='submit']) {
-  min-height: 48px;
-  padding-inline: 24px;
-}
-
 @media (max-width: 640px) {
-  html {
-    scroll-padding-top: 55px;
-  }
-
   .rule-frame,
   .topbar,
   .hero,
@@ -675,10 +640,9 @@ html {
     box-shadow: 8px 8px 0 var(--ink);
   }
 
-  .contact :where(button, [type='submit']) {
+  .btn--send {
     width: 100%;
   }
-
 }
 
 @media (max-width: 480px) {
