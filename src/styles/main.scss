@@ -131,22 +131,22 @@ a {
     color: var(--teal);
     font-family: var(--font-sans);
     font-weight: 800;
-    font-size: 26px;
+    font-size: 30px;
     letter-spacing: -0.055em;
     line-height: 1;
-    padding: 14px var(--pad-x);
-    padding-right: clamp(30px, 7vw, 48px);
+    height: 54px;
+    width: clamp(64px, 8vw, 94px);
+    flex-shrink: 0;
+    justify-content: center;
     text-decoration: none;
     display: flex;
     align-items: center;
-    clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
     &:hover { color: var(--cream); }
     &:focus-visible {
       z-index: 1;
       color: var(--cream);
-      clip-path: none;
-      outline: 3px solid var(--cream);
-      outline-offset: -5px;
+      outline: 2px solid var(--cream);
+      outline-offset: -4px;
     }
   }
 }
@@ -170,11 +170,9 @@ main {
     justify-content: center;
     text-align: center;
     padding: 0 clamp(16px, 4vw, 30px);
-    flex: 0 0 clamp(92px, 24vw, 124px);
+    flex: 0 0 clamp(80px, 23vw, 112px);
     position: relative;
-    margin-left: -22px;
     box-sizing: border-box;
-    clip-path: polygon(22px 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
     font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 600;
@@ -184,22 +182,16 @@ main {
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
 
-    &:last-child {
-      clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%);
-      padding-left: calc(clamp(16px, 4vw, 30px) + 10px);
-      padding-right: calc(clamp(16px, 4vw, 30px) - 10px);
-    }
+    &[aria-current="location"] { color: var(--teal); }
 
-    &::before {
+    &[aria-current="location"]::after {
       content: '';
       position: absolute;
-      top: -1px;
-      bottom: -1px;
-      left: 22px;
-      width: 1px;
-      background: var(--rule-cream);
-      transform: skewX(-22deg);
-      transform-origin: top;
+      bottom: 0;
+      left: 16px;
+      right: 16px;
+      height: 3px;
+      background: var(--teal);
     }
 
     &:active {
@@ -210,17 +202,14 @@ main {
 
     &:focus-visible {
       z-index: 1;
-      background: var(--cream);
-      color: var(--ink);
-      clip-path: none;
-      outline: 3px solid var(--ink);
-      outline-offset: -5px;
-
-      &::before { display: none; }
+      background: var(--ink-soft);
+      color: var(--cream);
+      outline: 2px solid var(--cream);
+      outline-offset: -4px;
     }
 
     @media (hover: hover) and (pointer: fine) {
-      &:hover { background: var(--cream); color: var(--ink); }
+      &:hover { background: var(--ink-soft); color: var(--cream); }
     }
   }
 }
@@ -611,11 +600,6 @@ main {
     letter-spacing: 0.10em;
   }
 
-  .nav__link:last-child {
-    padding-left: 16px;
-    padding-right: 4px;
-  }
-
   .hero__meta {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -655,17 +639,17 @@ main {
 
   .topbar {
     display: grid;
-    grid-template-columns: 84px minmax(0, 1fr);
+    grid-template-columns: 64px minmax(0, 1fr);
     gap: 0;
     padding-inline: 0;
     overflow: hidden;
   }
 
   .topbar__monogram {
-    flex: 0 0 84px;
+    width: 64px;
     justify-content: center;
-    padding-left: 0;
-    padding-right: 8px;
+    padding: 0;
+    border-right: 0;
   }
 
   .nav {
@@ -676,25 +660,12 @@ main {
     justify-content: flex-end;
   }
 
-  .nav__link,
-  .nav__link:last-child {
+  .nav__link {
     flex: 1 1 0;
     min-width: 0;
-    margin-left: -22px;
     padding-inline: 10px;
-    clip-path: polygon(22px 0, 100% 0, calc(100% - 22px) 100%, 0 100%);
   }
 
-  .nav__link:last-child {
-    padding-left: 16px;
-    padding-right: 4px;
-    clip-path: polygon(22px 0, 100% 0, 100% 100%, 0 100%);
-  }
-
-  .nav__link::before {
-    left: 22px;
-    transform: skewX(-22deg);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -35,3 +35,33 @@ const copyrightYear = `© ${toRoman(new Date().getFullYear())}`;
   </footer>
 </body>
 </html>
+
+<script>
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.nav__link'));
+  const sections = links.map(link => document.querySelector<HTMLElement>(link.hash));
+  let scheduled = false;
+
+  function updateCurrentSection() {
+    scheduled = false;
+    let current = -1;
+    sections.forEach((section, index) => {
+      if (section && section.getBoundingClientRect().top <= 120) current = index;
+    });
+    if (window.scrollY > 0 && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+      current = links.length - 1;
+    }
+    links.forEach((link, index) => {
+      if (index === current) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }
+
+  function scheduleUpdate() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(updateCurrentSection);
+  }
+  window.addEventListener('scroll', scheduleUpdate, { passive: true });
+  window.addEventListener('resize', scheduleUpdate);
+  updateCurrentSection();
+</script>
