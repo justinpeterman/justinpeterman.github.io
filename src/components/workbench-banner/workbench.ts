@@ -117,8 +117,21 @@ export function createWorkbenchRenderer(): BannerRenderer {
     const declaration = (sy: number, index: number, overridden = false) => {
       ctx.globalAlpha = config.motifOpacity * (overridden ? 0.65 : index === state.focusedRule ? 1.5 : 1);
       // Enable-state squares belong inside CSS rule blocks, before declarations.
-      box(sx + 7, sy + 2, 5, 5, false);
-      const px = sx + 18, propertyWidth = Math.min(23, space * 0.22);
+      const checkX = Math.round(sx + 6), checkY = Math.round(sy);
+      box(checkX, checkY, 9, 9, false);
+      if (!overridden) {
+        ctx.save();
+        ctx.globalAlpha = config.motifOpacity * 1.5;
+        ctx.lineWidth = 1.25;
+        ctx.lineJoin = 'round';
+        ctx.beginPath();
+        ctx.moveTo(checkX + 2, checkY + 4.5);
+        ctx.lineTo(checkX + 4, checkY + 6.5);
+        ctx.lineTo(checkX + 7, checkY + 2.5);
+        ctx.stroke();
+        ctx.restore();
+      }
+      const px = sx + 20, propertyWidth = Math.min(23, space * 0.22);
       const propertyLength = index === 0 || overridden ? propertyWidth : propertyWidth * 0.75;
       box(px, sy + 4, propertyLength, 3, true);
       const colon = px + propertyWidth + 4;
