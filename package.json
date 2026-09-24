@@ -11,7 +11,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build"
+    "test": "node --experimental-strip-types --test src/components/bold/workbench-banner/*.test.ts"
   },
   "dependencies": {
     "@astrojs/partytown": "^2.1.7",

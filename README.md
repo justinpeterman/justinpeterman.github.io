@@ -74,8 +74,7 @@ mise run install
 | `mise run dev` | Start Astro's local development server |
 | `mise run build` | Build the static site into `dist/` |
 | `mise run preview` | Serve the production build locally |
-| `mise run deploy` | Run the deployable production build |
-| `mise exec -- node --experimental-strip-types --test src/components/bold/workbench-banner/*.test.ts` | Run the canvas renderer tests |
+| `mise run test` | Run the canvas renderer tests |
 
 Astro prints the actual local URL when a server starts. The port can change when another process is already using the default.
 
@@ -105,4 +104,4 @@ highlights:
 
 ## Deployment
 
-Pushes to `main` run [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). GitHub Actions installs the frozen pnpm lockfile, runs the Astro build, uploads `dist/`, and deploys it to GitHub Pages. The workflow can also be started manually from GitHub.
+Pushes to `main` run [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). GitHub Actions installs the frozen pnpm lockfile, runs tests and the Astro build, uploads `dist/`, and deploys it to GitHub Pages. The workflow can also be started manually from GitHub.

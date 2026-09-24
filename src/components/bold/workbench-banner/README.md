@@ -105,7 +105,7 @@ No new runtime dependencies were added.
 
 ```sh
 mise run build
-mise exec -- node --experimental-strip-types --test src/components/bold/workbench-banner/*.test.ts
+mise run test
 ```
 
 Tests cover foreground collision avoidance, original balanced state behavior, and
