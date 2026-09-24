@@ -111,7 +111,20 @@
     letter-spacing: -0.005em;
     color: var(--text-muted);
     max-width: 600px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
+  }
+
+  &__highlights {
+    padding-left: 1.25rem;
+    margin: 0 0 24px;
+    max-width: 600px;
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.65;
+
+    li + li { margin-top: 10px; }
+    li::marker { color: var(--accent); }
+    strong { color: var(--text); font-weight: 600; }
   }
 
   &__tags {

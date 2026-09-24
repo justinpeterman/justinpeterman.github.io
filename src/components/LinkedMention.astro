@@ -1,0 +1,15 @@
+---
+interface Props {
+  text: string;
+  label: string;
+  href?: string;
+}
+const { text, label, href } = Astro.props;
+const parts = href && label ? text.split(label) : [text];
+---
+{parts.map((part, index) => <>{index > 0 && <a href={href}>{label}</a>}{part}</>)}
+
+<style>
+  a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
+  a:hover { color: var(--teal, currentColor); }
+</style>

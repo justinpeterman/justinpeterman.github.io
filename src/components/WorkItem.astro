@@ -1,19 +1,26 @@
 ---
+import LinkedMention from './LinkedMention.astro';
 interface Props {
   title: string;
   company: string;
+  companyUrl?: string;
   years: string;
   tags: string[];
   body: string;
+  bodyLink?: { label: string; url: string };
+  highlights: { lead: string; text: string }[];
   delay?: string;
 }
-const { title, company, years, tags, body, delay = '' } = Astro.props;
+const { title, company, companyUrl, years, tags, body, bodyLink, highlights, delay = '' } = Astro.props;
 ---
 <div class={`work-item scroll-reveal${delay ? ` ${delay}` : ''}`}>
   <div class="work-item__main">
     <h3 class="work-item__title">{title}</h3>
-    <span class="work-item__company">{company}</span>
-    <p class="work-item__desc" set:html={body}></p>
+    <span class="work-item__company"><LinkedMention text={company} label={company} /></span>
+    <p class="work-item__desc"><LinkedMention text={body} label={bodyLink?.label ?? company} href={bodyLink?.url ?? companyUrl} /></p>
+    <ul class="work-item__highlights">
+      {highlights.map(({ lead, text }) => <li><strong>{lead}.</strong> {text}</li>)}
+    </ul>
     <div class="work-item__tags">
       {tags.map(tag => <span class="work-item__tag">{tag}</span>)}
     </div>

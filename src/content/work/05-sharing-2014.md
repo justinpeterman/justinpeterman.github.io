@@ -3,6 +3,11 @@ title: Sharing Web Platform
 company: LinkedIn
 years: "2014"
 order: 5
-tags: [CSS, HTML, Java, Javascript, Play]
-body: Led the frontend implementation of LinkedIn's updated inShare button in collaboration with brand and marketing, shipped to top sharing publishers as part of marketing push. Drove frontend migration of LinkedIn's offsite share dialogs and onsite reshare dialogs from legacy stack to Play and ramped to all members.
+tags: [JavaScript, Java, Play, CSS]
+body: "Led frontend delivery for LinkedIn’s sharing tools, both on LinkedIn and across publisher sites."
+highlights:
+  - lead: "Publisher integration"
+    text: "Shipped the redesigned inShare button in collaboration with brand and marketing teams."
+  - lead: "Platform migration"
+    text: "Migrated share and reshare dialogs off legacy systems to Play, rolling out to all members."
 ---

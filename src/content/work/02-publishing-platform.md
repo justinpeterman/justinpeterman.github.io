@@ -3,6 +3,15 @@ title: Publishing Platform
 company: LinkedIn
 years: "2019 — 2026"
 order: 2
-tags: [Architecture, Claude Code, Ember, GraphQL, Java, Javascript, Kusto, Leadership, Mentorship, ProseMirror, Prototyping, Quill, SCSS, Tiptap]
-body: "Led the ground-up rebuild of LinkedIn's flagship article writing experience, migrating from Quill to Tiptap to improve build reliability, testing, and deployment overhead — delivering a faster, more reliable authoring surface and unlocking product features not previously feasible. Also led the rewrite of @mentions on LinkedIn share box and article editor, an implementation adopted by Publishing and Homepage feed share box. Launched cover video creation and consumption experience for LinkedIn articles, rolled out across 30+ surfaces on site. Beyond the editor, led the team owning LinkedIn's article reading experience and newsletter creation features, while mentoring junior engineers across team."
+tags: [Architecture, Tiptap, ProseMirror, Ember, GraphQL]
+body: "Web lead for LinkedIn’s article authoring, reading, and newsletter experiences, supporting an ecosystem of 150K+ newsletters and more than 1.5B subscriptions."
+highlights:
+  - lead: "Editor architecture"
+    text: "Led the ground-up rebuild from Quill to Tiptap/ProseMirror, helping set technical direction for rich-text architecture across LinkedIn’s flagship surfaces."
+  - lead: "Structured content"
+    text: "Designed a new article data schema and bidirectional transformations connecting storage, APIs, frontend models, and the rich-text editor."
+  - lead: "Product development"
+    text: "Supported new features across article and newsletter surfaces throughout LinkedIn."
+  - lead: "Production ownership"
+    text: "Investigated incidents across frontend and API layers, assessed impact with SQL and Kusto, and ran postmortems with partner teams."
 ---

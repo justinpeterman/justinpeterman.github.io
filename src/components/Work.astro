@@ -18,9 +18,12 @@ const delays = ['', 'scroll-reveal--delay-1', 'scroll-reveal--delay-2', 'scroll-
         <WorkItem
           title={entry.data.title}
           company={entry.data.company}
+          companyUrl={entry.data.companyUrl}
           years={entry.data.years}
           tags={entry.data.tags}
           body={entry.data.body}
+          bodyLink={entry.data.bodyLink}
+          highlights={entry.data.highlights}
           delay={delays[i] ?? ''}
         />
       ))}
