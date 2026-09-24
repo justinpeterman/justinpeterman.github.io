@@ -16,7 +16,7 @@ a {
   color: var(--ink);
 
   @media (hover: hover) and (pointer: fine) {
-    &:hover { color: #0B3A33; }
+    &:hover { color: var(--ink-soft); }
   }
 }
 ::selection { background: var(--ink); color: var(--teal); }
@@ -92,7 +92,7 @@ a {
   }
 
   &--ink  { background: var(--ink); color: var(--cream); border-color: var(--ink);
-            &:hover, &:focus-visible { background: #0B3A33; color: var(--cream); } }
+            &:hover, &:focus-visible { background: var(--ink-soft); color: var(--cream); } }
   &--outline { background: transparent; color: var(--ink);
                &:hover, &:focus-visible { background: var(--ink); color: var(--cream); } }
   &--send { background: var(--teal); color: var(--ink); align-self: flex-start; padding: 15px 30px;
@@ -245,7 +245,7 @@ main {
   &__meta {
     display: flex;
     flex-wrap: wrap;
-    background: rgba(0, 0, 0, 0.04);
+    background: var(--teal-subtle);
     border-top: 1px solid var(--rule-ink);
   }
 
@@ -297,8 +297,8 @@ main {
   &:nth-of-type(odd) { background: rgba(255, 255, 255, 0.03); }
 
   &__main {
+    min-width: 0;
     padding: clamp(24px, 3vw, 34px) var(--pad-x) 20px;
-    border-right: 1px solid var(--rule-cream);
 
     h3 {
       margin: 0 0 6px;
@@ -359,7 +359,6 @@ main {
 
   &__left {
     padding: clamp(30px, 4vw, 44px) var(--pad-x) clamp(28px, 3.5vw, 40px);
-    border-right: 1px solid var(--rule-ink);
 
     h3 {
       margin: 30px 0 0;
@@ -386,7 +385,7 @@ main {
   flex: 1 1 clamp(200px, calc((700px - 100vw) * 999), 100%);
   min-width: 0;
   padding: clamp(17px, 2vw, 28px) var(--pad-x);
-  background: rgba(0, 0, 0, 0.04);
+  background: var(--teal-subtle);
   border-right: 1px solid var(--rule-ink);
   border-bottom: 1px solid var(--rule-ink);
 
@@ -409,6 +408,11 @@ main {
 .socials {
   display: flex;
   flex-wrap: wrap;
+
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
 .social {
@@ -447,10 +451,9 @@ main {
   &__intro {
     padding: clamp(30px, 4vw, 48px) var(--pad-x);
     padding-bottom: clamp(6px, 2vw, 48px);
-    border-right: 1px solid var(--rule-ink);
 
     h3 { margin: 0 0 16px; font-size: clamp(30px, 3.6vw, 48px); font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
-    p  { margin: 0; font-size: 16px; line-height: 1.7; color: #33413C; max-width: 42ch; }
+    p  { margin: 0; font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 42ch; }
   }
 
   &__form-wrap {
@@ -462,7 +465,7 @@ main {
     display: none;
     &--visible { display: block; }
     &-heading { margin: 0 0 6px; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; }
-    &-sub     { margin: 0; font-size: 15px; color: #33413C; }
+    &-sub     { margin: 0; font-size: 15px; color: var(--ink-soft); }
   }
 }
 
@@ -536,22 +539,9 @@ html {
   object-fit: contain;
 }
 
-.eyebrow,
-.hero__meta-label,
-.work-item__years,
-.social-link,
-.contact-form label,
-.contact__form label {
+.work-item__years {
   font-size: max(12px, 0.75rem);
   letter-spacing: 0.10em;
-}
-
-.contact-form label,
-.contact__form label {
-  font-weight: 500;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-  color: var(--ink);
 }
 
 :where(a, button, input, textarea, select):focus-visible {
@@ -574,23 +564,9 @@ html {
   padding-inline: 24px;
 }
 
-.about__copy p,
-.about__body p {
-  line-height: 1.75;
-}
-
-.about__copy p + p,
-.about__body p + p {
-  margin-top: 1.25em;
-}
-
 @media (max-width: 640px) {
   html {
     scroll-padding-top: 55px;
-  }
-
-  .work-item__main {
-    border-right: none;
   }
 
   .rule-frame,
@@ -657,10 +633,6 @@ html {
     width: 100%;
   }
 
-  .about__copy p,
-  .about__body p {
-    line-height: 1.8;
-  }
 }
 
 @media (max-width: 480px) {
