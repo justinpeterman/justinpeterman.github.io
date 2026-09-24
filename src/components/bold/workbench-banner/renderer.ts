@@ -28,7 +28,15 @@ export function mountBanner(host: HTMLElement) {
   let visible = false;
   let workbenchHovered = false;
   let disposed = false;
-  const paint = () => artwork.draw(ctx, palette, reducedMotion ? 0 : animationElapsed, reducedMotion ? 0 : elapsed);
+  let paintedKey: number | undefined;
+  function paint(force = false) {
+    const time = reducedMotion ? 0 : animationElapsed;
+    const ambientTime = reducedMotion ? 0 : elapsed;
+    const key = artwork.frameKey?.(time, ambientTime);
+    if (!force && key !== undefined && key === paintedKey) return;
+    artwork.draw(ctx!, palette, time, ambientTime);
+    paintedKey = key;
+  }
 
   function stop() {
     cancelAnimationFrame(frame);
@@ -79,7 +87,7 @@ export function mountBanner(host: HTMLElement) {
     }
     artwork.measure(bounds.width, bounds.height, safe);
     measured = true;
-    paint();
+    paint(true);
     host!.setAttribute('data-ready', '');
     sync();
   }

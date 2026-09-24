@@ -3,6 +3,16 @@ import assert from 'node:assert/strict';
 import { composeWorkbench, createWorkbenchState } from './workbench-model.ts';
 import { createWorkbenchRenderer } from './renderers/workbench.ts';
 
+test('workbench redraw keys change only on a beat or cursor blink', () => {
+  const renderer = createWorkbenchRenderer();
+  const key = renderer.frameKey!(0, 0);
+  assert.equal(renderer.frameKey!(9000, 999), key, 'hover-scaled time does not affect the cursor');
+  assert.notEqual(renderer.frameKey!(9000, 1000), key);
+  assert.equal(renderer.frameKey!(9000, 2000), key);
+  renderer.advance();
+  assert.notEqual(renderer.frameKey!(0, 0), key, 'a new inspection step repaints');
+});
+
 test('workbench docks outside measured text, simplifies and omits when crowded', () => {
   const fixtures = [
     { width: 1278, height: 405, safe: [{ x: 14, y: 54, width: 764, height: 344 }], kind: 'workbench' },

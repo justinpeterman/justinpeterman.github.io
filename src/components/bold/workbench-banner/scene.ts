@@ -25,6 +25,7 @@ export type Motif = Rect & { kind: string };
 export type Scene = { width: number; height: number; motifs: Motif[]; small: boolean };
 export type Palette = { accentColor: string; backgroundColor: string; panelBackgroundColor?: string };
 export type BannerRenderer = {
+  frameKey?(time: number, ambientTime: number): number;
   hasMotion?(): boolean;
   hitTest?(x: number, y: number): boolean;
   measure(width: number, height: number, safe: Rect[]): void;

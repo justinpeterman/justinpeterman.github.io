@@ -147,6 +147,7 @@ export function createWorkbenchRenderer(): BannerRenderer {
   }
 
   return {
+    frameKey(_time, ambientTime) { return state.step * 2 + Math.floor(ambientTime / 1000) % 2; },
     hasMotion() { return !!scene?.motifs.length; },
     hitTest(x, y) {
       return scene?.motifs.some(panel => x >= panel.x && x <= panel.x + panel.width && y >= panel.y && y <= panel.y + panel.height) ?? false;

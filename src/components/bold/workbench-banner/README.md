@@ -85,6 +85,9 @@ determines layout height.
 ## Motion and fallback
 
 Renderers with no moving composition stop the loop. Offscreen and hidden-document
+pauses avoid background work. The workbench only repaints when its inspection
+step or cursor visibility changes; measurement forces a repaint. A single RAF
+loop tracks elapsed time, without redrawing unchanged frames. Hidden-document
 pauses reset frame timestamps, preventing catch-up bursts. Reduced motion renders
 a deterministic still, and changing the preference live uses the media-query event
 state. Listeners, RAF, and observers are removed on disconnection. Browser history
